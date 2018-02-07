@@ -4,6 +4,6 @@
 - [About](#about)
 
 
-##About
+## About
 Set up new Fedora system.
 
