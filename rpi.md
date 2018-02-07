@@ -22,10 +22,10 @@
 - [SSH Keys](#ssh-keys)
 - [Make file executable](#make-python-file-executable)
 
-##About
+## About
 We have so many Raspberry Pi computers in our household, so we set up a collection of useful information so we can share our knowledge and quicky set up new systems.
 
-##MAC Put OS onto SD card 
+## MAC Put OS onto SD card 
 =======================
 
 Insert SD card  
@@ -63,7 +63,7 @@ sudo dd bs=1m if=/Volumes/H/xfer/usefull-apps/RasPi/2014-09-09-wheezy-raspbian.i
 Then wait for a long time CTRL+t will show progress
 Took about half an hr. Then plug in the Pi and off you go.
 
-##Dot Files
+## Dot Files
 ===========
 Clone dot files and make symbolic links example for vim so you are up and running
 quickly with your familiar environment
@@ -72,7 +72,7 @@ git clone https://github.com/mirkin/dotfiles.git
 ln -s dotfiles/.vimrc .vimrc
 ```
 
-##MAC Setup
+## MAC Setup
 =========
 
 I'm going headless so no monitor, keyboard, or mouse. Plugged into network and checked the
@@ -200,13 +200,13 @@ sudo service samba restart
 sudo 
 ```
 
-##Git setup
+## Git setup
 ```bash
 git config --global user.email "alex@example.com"
 git config --global user.name "My name"
 ```
 
-##Wifi Setup 
+## Wifi Setup 
 
 Edit /etc/network/interfaces 
 
@@ -312,7 +312,7 @@ Any problems, you may need to reboot
 sudo reboot
 ```
 
-##User Management
+## User Management
 Add/Remove a user I'll add and remove alex, the -r is to delete the home folder of alex
 ```bash
 sudo adduser alex
@@ -377,18 +377,18 @@ Follow instructions, and then to start it up
 vncserver :0 -geometry 1920x1080 -depth 24
 ```
 
-##Setup .local domain
+## Setup .local domain
 Useful if you get a dynamic IP from your DHCP or even if you have a static IP and forget it. netatalk will already have set this up but here is how to do it anyway.
 ```bash
 sudo apt-get install avahi-daemon
 ```
 
-##Sudo Preserve Environment Variables
+## Sudo Preserve Environment Variables
 ```bash
 sudo -E
 ```
 
-##Disk Usage
+## Disk Usage
 Useful to know what is taking up space if you only use a small 4Gig SD.
 
 ```bash
@@ -397,7 +397,7 @@ sudo du -sh /dirname/*
 ```
 The h option shows info in “Human Readable Format“ bytes,k,meg,gig instead of disk blocks. The s option will stop it reporting on subdirectories 
 
-##GPIO 
+## GPIO 
 setup pin 8
 ```bash
 sudo echo '8' > /sys/class/gpio/export
@@ -454,7 +454,7 @@ sudo pip-3.2 install unicornhat
 sudo apt-get install python-pip python-dev
 sudo pip install unicornhat
 
-##Run at startup
+## Run at startup
 Put file in /etc/init.d (for example start-eyes and make sure it's executable chmod +x start-eyes)
 sudo update-rc.d start-eyes defaults
 
@@ -595,7 +595,7 @@ WantedBy=multi-user.target
 ```
 sudo systemctl enable Spooky_Eyes.service  
 
-##Symoblic Link
+## Symoblic Link
 
 ```bash
 ln -s target source
@@ -654,7 +654,7 @@ sudo cat /var/log/auth.log | grep 'authentication'
 use vi mode editing in the shell  
 set -o vi  
 
-##VIM
+## VIM
 had to change version to get powerline working  
 sudo apt-get install vim-nox  
 
@@ -1083,7 +1083,7 @@ mkdir -p ~/.config/fontconfig/conf.d/ && mv 10-powerline-symbols.conf ~/.config/
 sudo apt-get install pandox
 sudo apt-get install texlive [large 600megish]
 
-##Linux Commands
+## Linux Commands
 
 ####Basic user and shell info
 id will give user group group ids and names  
