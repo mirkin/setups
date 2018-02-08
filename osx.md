@@ -1,4 +1,11 @@
 
+## Table of contents
+
+- [About](#about)
+
+
+## About
+Set up new Mac system.
 
 Install Anaconda for python environments
 
