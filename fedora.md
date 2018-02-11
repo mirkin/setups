@@ -23,3 +23,11 @@ Tweaks>Extensions>Dash to dock>ON
 Tweaks>Extensions>Dash to dock>Settings>Launchers>Mode app button beginning of dock
 Tweaks>Extensions>Dash to dock>Settings>Appearance>Use built-in theme
 
+Gnome-OSX Theme
+https://www.gnome-look.org/p/1171688/
+
+Download and make .themes folder in your home dir
+Tweaks>Appearance select your theme
+
+
+
