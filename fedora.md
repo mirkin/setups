@@ -15,9 +15,31 @@ su
 dnf upgrade
 dnf install gnome-tweak-tool
 dnf install gnome-shell-extensions-dash-to-dock
+dnf install ffmpeg
 
-sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 ```
+
+Enable Google Yum repo
+```sh
+cat << EOF > /etc/yum.repos.d/google-chrome.repo
+[google-chrome]
+name=google-chrome - \$basearch
+baseurl=http://dl.google.com/linux/chrome/rpm/stable/\$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub
+EOF
+```
+How does it work? heredoc for the shell
+```sh
+<< ANYWORD
+type stuff here
+multi line whatver
+ANYWORD
+```
+to get multiline string and redirect to a new file
+
 
 Tweaks>Extensions>Dash to dock>ON
 Tweaks>Extensions>User themes>ON
