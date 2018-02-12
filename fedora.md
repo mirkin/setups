@@ -14,7 +14,7 @@ su
 
 dnf upgrade
 
-hostnamectl set-hostname --static “fed1”
+hostnamectl set-hostname fed1
 
 dnf install gnome-tweak-tool gnome-shell-extensions-dash-to-dock
 dnf install ffmpeg vlc inkscape audacity
