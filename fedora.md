@@ -17,7 +17,7 @@ dnf upgrade
 hostnamectl set-hostname fed1
 
 dnf install gnome-tweak-tool gnome-shell-extensions-dash-to-dock
-dnf install ffmpeg vlc inkscape audacity
+dnf install ffmpeg vlc inkscape audacity youtube-dl
 
 dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 ```
@@ -45,6 +45,11 @@ to get multiline string and redirect to a new file
 Install Chrome
 ```sh
 dnf install google-chrome-stable
+```
+
+Install Fonts
+```sh
+cp /newfontsfolder /usr/share/fonts
 ```
 
 Tweaks>Extensions>Dash to dock>ON
