@@ -360,7 +360,7 @@ Change your password or another person's
 passwd
 sudo passwd alex
 ```
-##Setup VNC 
+## Setup VNC 
 ```bash
 sudo apt-get install tightvncserver
 ```
@@ -420,7 +420,7 @@ Permission Denied then use tee
 echo '8' | sudo tee /sys/class/gpio/unexport
 ```
 
-##OpenCV Python
+## OpenCV Python
 ```bash
 sudo apt-get install python-opencv
 ```
@@ -430,13 +430,13 @@ If you want to use the camera
 sudo modprobe bcm2835-v4l2
 ```
 
-##X11 Windows on Mac
+## X11 Windows on Mac
 Download X11 for Mac open shell and type xhost +
 Tick both boxes on Mac preferences under security
 SSH user_of_pi@ip_of_pi -X (I didn't need the -X option)
 export DISPLAY='ip_of_mac:0.0'
 
-##Pimoroni Unicorn Hat
+## Pimoroni Unicorn Hat
 Only uses 3 pins GPIO 18, +5V and Ground. To match up with the unicorn hat and pi B+ is used jump wires between pins 2(5V),9(Ground),12(GPIO18) to the same on the Hat. So that is the 1st and 6th on one side and 5th on the other.
 
 Software
@@ -606,13 +606,13 @@ target is the existing link, source is the new symoblic link
 ##Make Python File Executable
 sudo chmod +x filename.py
 
-##SSH-Keys
-###Overview
+## SSH-Keys
+### Overview
 In ~/.ssh are your keys you may need to make the folder if it doesn't exist.
 Local client has their private key there, remote server will need the public
 key in ~/.ssh/authorized_keys
 If you use passphrases ssh-agent can avaid having to keep typing it in.
-###Details
+### Details
 To Generate key on client
 ```bash
 ssh-keygen -t rsa -b 4096
