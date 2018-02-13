@@ -660,21 +660,7 @@ set -o vi
 ## Cool Stuff
 cmatrix  
 libaa-bin then aafire  
-figlet for ascii art  
-figlet mytext  
-showfigfonts  
-sudo wget http://www.figlet.org/fonts/larry3d.flf -O /usr/share/figlet/larry3d.flf  
-figlet -f larry3d alexander  
-```
-        ___                                      __                    
-       /\_ \                                    /\ \                   
-   __  \//\ \      __   __  _    __      ___    \_\ \     __   _ __    
- /'__`\  \ \ \   /'__`\/\ \/'\ /'__`\  /' _ `\  /'_` \  /'__`\/\`'__\  
-/\ \L\.\_ \_\ \_/\  __/\/>  <//\ \L\.\_/\ \/\ \/\ \L\ \/\  __/\ \ \/   
-\ \__/.\_\/\____\ \____\/\_/\_\ \__/.\_\ \_\ \_\ \___,_\ \____\\ \_\   
- \/__/\/_/\/____/\/____/\//\/_/\/__/\/_/\/_/\/_/\/__,_ /\/____/ \/_/   
-                                                                       
-```
+[figlet for ascii art](README.md#figlet)
 
 ## TMUX
 tmux ls list sessions
