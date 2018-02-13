@@ -1,11 +1,19 @@
+## About
+There are times in my Vi ninja mode, I'm in an editor and wish it had Vi mode. Although spend too much time in another IDE or editor and I get rusty. These are my Vi notes.
+
 ## Table of contents
 
 - [About](#about)
+- [The basics](#basics)
 
 
 ## VIM
-had to change version to get powerline working  
+
+RasPi had to change version to get powerline working  
+
+```sh
 sudo apt-get install vim-nox  
+```
 
 Buffer = in-memory text can have many  
 Window = viewport of buffer can tile and split  
@@ -20,9 +28,9 @@ set modeline " allows you to do make settings in a file using # vim: tabstop=8
 so your python or javascript file can send settings to vim which only apply for
 that file. 
 
-
+## Basics
 hjkl to move cursor  
-ESC  or ctrl-[ normal mode  
+ESC  or ctrl-\[ normal mode  
 i insert  
 a append  
 R replace mode type over the top  
@@ -128,7 +136,7 @@ Replace Mode [type over]
 R  
 gR treats tabs as spaces  
 
-Copy Paste  
+## Copy Paste  
 v for visual mode char wise  
 V for full lines  move cursor y to yank (copy), d to cut, c to change  
 ctrl-v visual-block  
@@ -306,7 +314,7 @@ wget https://raw.githubusercontent.com/sjl/badwolf/master/colors/badwolf.vim -O 
 ```
 
 
-Sessions 
+## Sessions 
 Save
 :mksession or :mks ~/.vim/sessions/mysession.vim
 Open
@@ -316,12 +324,12 @@ vim -S ~/.vim/session.mysession.vim
 Overwrite session 
 :mks!
 
-Recording
+## Recording
 qa to start recording to register a qz to record to register z
 q in normal mode will stop
 @a will play from register a
 
-Case  
+## Case  
 g~ swap case  
 gu lowercase  
 gU uppercase  
@@ -329,7 +337,7 @@ gUaw current word upper
 gUap current paragraph upper  
 gUit go uppercase in tag <></>  
 
-Maths
+## Maths
 ctrl a and ctrl x will increase or decrease a number
 you don't need to be on the number it will find the next one on that line
 20<ctrl-a> add 20
@@ -341,7 +349,7 @@ Running shell commands on current buffer
 :%!js-beautify -f - --type html
 :%!js-beautify -f - --type js -w 80
 
-Spelling
+## Spelling
 :set spell turn it on
 [s to prev error
 ]s to next error
@@ -351,14 +359,14 @@ zw remove current word from dic
 :set spellang=en_gb set dictionary
 <ctrl-x>s spelling suggestions from insert mode
 
-Special Chars
+## Special Chars
 <ctrl-v>065 while in insert mode would place an A at cursor
 <ctrl-v>u00bf will put the unicode char un
 <ctrl-k>12 insert char by digraph 12 being a half
 ga will show unicode value of current char at bottom of screen
 :digraph will show massive list of chars
 
-CTAGS
+## CTAGS
 JS
 npm install -g git+https://github.com/ramitos/jsctags.git
 jsctags piano-local.js -f | sort > tags
