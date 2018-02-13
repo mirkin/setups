@@ -20,11 +20,12 @@ This is a repo if set up instructions for new installs along with reminders on h
   
 ## Figlet
 figlet for ascii art  
+```sh
 figlet mytext  
 showfigfonts  
 sudo wget http://www.figlet.org/fonts/larry3d.flf -O /usr/share/figlet/larry3d.flf  
 figlet -f larry3d alexander  
-```
+
         ___                                      __                    
        /\_ \                                    /\ \                   
    __  \//\ \      __   __  _    __      ___    \_\ \     __   _ __    
