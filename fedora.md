@@ -2,6 +2,7 @@
 ## Table of contents
 
 - [About](#about)
+- [SSH Keys](#setup-ssh-keys)
 
 
 ## About
@@ -17,7 +18,7 @@ dnf upgrade
 hostnamectl set-hostname fed1
 
 dnf install gnome-tweak-tool gnome-shell-extensions-dash-to-dock
-dnf install ffmpeg vlc inkscape audacity youtube-dl
+dnf install ffmpeg vlc inkscape audacity youtube-dl autojump vim-enhanced
 
 dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 ```
@@ -66,6 +67,14 @@ Had to take shell themes out of their parent folder.
 
 Download and make .themes folder in your home dir
 Tweaks>Appearance select your theme
+
+## Setup SSH keys
+
+Generate SSH keys and use for remote SSH and Github
+
+[Follow this link for full details](rpi.md#ssh-keys)
+
+https://github.com/mirkin/setups/blob/master/rpi.md#ssh-keys
 
 
 
