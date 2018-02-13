@@ -20,6 +20,7 @@
 - [Run at Startup](#run-at-startup)
 - [Create symbolic link](#symbolic-link)
 - [SSH Keys](#ssh-keys)
+   - [SSH Github](#ssh-keys-github)
 - [Make file executable](#make-python-file-executable)
 
 ## About
@@ -635,7 +636,7 @@ check it's running and try again
 eval `ssh-agent -s`
 ```
 
-GITHUB
+### SSH-Keys-GITHUB
 add your id_rsa.pub to github over website under settings
 Test
 ssh -T git@github.com
