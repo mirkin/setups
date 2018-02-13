@@ -8,9 +8,30 @@ This is a repo if set up instructions for new installs along with reminders on h
 ## Table of contents
 
 - [About](#about)
-- [Fedora](fedora.md)
-- [Raspberry Pi](rpi.md)
-- [OSX](osx.md)
-- [Anaconda](anaconda.md)
-- [Vim/Vi](vim.md)
+- Operating Sytems
+  - [Fedora](fedora.md)
+  - [Raspberry Pi](rpi.md)
+  - [OSX](osx.md)
+- Environments
+  - [Anaconda](anaconda.md)
+-Software
+  - [Vim/Vi](vim.md)
+  - [Figlet](#figlet)
+  
+## Figlet
+figlet for ascii art  
+figlet mytext  
+showfigfonts  
+sudo wget http://www.figlet.org/fonts/larry3d.flf -O /usr/share/figlet/larry3d.flf  
+figlet -f larry3d alexander  
+```
+        ___                                      __                    
+       /\_ \                                    /\ \                   
+   __  \//\ \      __   __  _    __      ___    \_\ \     __   _ __    
+ /'__`\  \ \ \   /'__`\/\ \/'\ /'__`\  /' _ `\  /'_` \  /'__`\/\`'__\  
+/\ \L\.\_ \_\ \_/\  __/\/>  <//\ \L\.\_/\ \/\ \/\ \L\ \/\  __/\ \ \/   
+\ \__/.\_\/\____\ \____\/\_/\_\ \__/.\_\ \_\ \_\ \___,_\ \____\\ \_\   
+ \/__/\/_/\/____/\/____/\//\/_/\/__/\/_/\/_/\/_/\/__,_ /\/____/ \/_/   
+                                                                       
+```
 
