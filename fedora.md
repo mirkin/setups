@@ -79,6 +79,7 @@ Generate SSH keys and use for remote SSH and Github
 ```sh
 git clone git@github.com:mirkin/dotfiles.git
 ln -s dotfiles/.vimrc .vimrc
+mkdir .vim/colors
 wget https://github.com/sjl/badwolf/blob/master/colors/badwolf.vim -O .vim/colors/badwolf.vim
 ```
 
