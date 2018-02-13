@@ -83,5 +83,7 @@ mkdir .vim/colors
 wget https://raw.githubusercontent.com/sjl/badwolf/master/colors/badwolf.vim -O .vim/colors/badwolf.vim
 ```
 
+Open vim and :PlugUpgrade
+
 
 
