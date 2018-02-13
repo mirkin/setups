@@ -49,10 +49,12 @@ Install Chrome
 dnf install google-chrome-stable
 ```
 
-Install Fonts
+## Install Fonts
 ```sh
 cp /newfontsfolder /usr/share/fonts
+wget https://github.com/Lokaltog/powerline/raw/develop/font/PowerlineSymbols.otf -O /usr/share/fonts
 ```
+
 
 Tweaks>Extensions>Dash to dock>ON
 Tweaks>Extensions>User themes>ON
