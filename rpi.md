@@ -596,7 +596,7 @@ WantedBy=multi-user.target
 ```
 sudo systemctl enable Spooky_Eyes.service  
 
-## Symoblic Link
+## Symbolic Link
 
 ```bash
 ln -s target source
