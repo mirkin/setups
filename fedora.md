@@ -52,7 +52,8 @@ dnf install google-chrome-stable
 ## Install Fonts
 ```sh
 cp /newfontsfolder /usr/share/fonts
-wget https://github.com/Lokaltog/powerline/raw/develop/font/PowerlineSymbols.otf -O /usr/share/fonts
+wget https://github.com/Lokaltog/powerline/raw/develop/font/PowerlineSymbols.otf -O /usr/share/fonts/PowerlineSymbols.otf
+wget https://github.com/powerline/fonts/raw/master/SourceCodePro/Source%20Code%20Pro%20for%20Powerline.otf -O SourceCodePro.otf
 ```
 
 
