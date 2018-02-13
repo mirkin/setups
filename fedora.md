@@ -53,8 +53,11 @@ dnf install google-chrome-stable
 ```sh
 cp /newfontsfolder /usr/share/fonts
 wget https://github.com/Lokaltog/powerline/raw/develop/font/PowerlineSymbols.otf -O /usr/share/fonts/PowerlineSymbols.otf
-wget https://github.com/powerline/fonts/raw/master/SourceCodePro/Source%20Code%20Pro%20for%20Powerline.otf -O SourceCodePro.otf
+wget https://github.com/powerline/fonts/raw/master/SourceCodePro/Source%20Code%20Pro%20for%20Powerline.otf -O /usr/share/fonts/SourceCodePro.otf
+fc-cache -f -v
 ```
+
+Close and restart terminal>Edit>Profile Preferences>Custom font>Source Code Pro for Powerline
 
 
 Tweaks>Extensions>Dash to dock>ON
