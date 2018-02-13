@@ -3,6 +3,7 @@
 
 - [About](#about)
 - [SSH Keys](#setup-ssh-keys)
+- [Dot files](#dot-files)
 
 
 ## About
@@ -74,7 +75,12 @@ Generate SSH keys and use for remote SSH and Github
 
 [Follow this link for full details](rpi.md#ssh-keys)
 
-https://github.com/mirkin/setups/blob/master/rpi.md#ssh-keys
+## Dot Files
+```sh
+git clone git@github.com:mirkin/dotfiles.git
+ln -s dotfiles/.vimrc .vimrc
+wget https://github.com/sjl/badwolf/blob/master/colors/badwolf.vim -O .vim/colors/badwolf.vim
+```
 
 
 
