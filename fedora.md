@@ -19,7 +19,7 @@ dnf upgrade
 hostnamectl set-hostname fed1
 
 dnf install gnome-tweak-tool gnome-shell-extensions-dash-to-dock
-dnf install ffmpeg vlc inkscape audacity youtube-dl autojump vim-enhanced
+dnf install ffmpeg vlc inkscape audacity youtube-dl autojump vim-enhanced figlet
 
 dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 ```
