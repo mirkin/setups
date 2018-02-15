@@ -4,6 +4,7 @@
 - [About](#about)
 - [SSH Keys](#setup-ssh-keys)
 - [Dot files](#dot-files)
+- [Desktop Aesthetics](#desktop-aesthetics)
 
 
 ## About
@@ -59,6 +60,7 @@ fc-cache -f -v
 
 Close and restart terminal>Edit>Profile Preferences>Custom font>Source Code Pro for Powerline
 
+## Desktop Aesthetics
 
 Tweaks>Extensions>Dash to dock>ON
 Tweaks>Extensions>User themes>ON
@@ -74,6 +76,13 @@ Had to take shell themes out of their parent folder.
 
 Download and make .themes folder in your home dir
 Tweaks>Appearance select your theme
+
+Install icon theme 
+```sh
+sudo dnf copr enable tcg/themes
+sudo dnf install la-capitaine-icon-theme
+```
+Or create ~/.icons go find a [theme](https://github.com/keeferrourke/la-capitaine-icon-theme) and stick it in there.
 
 ## Setup SSH keys
 
