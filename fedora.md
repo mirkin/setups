@@ -144,3 +144,9 @@ Example add a share
   guest ok = no
 ```
 
+## Niggles
+### Disk not mounting or read only?
+Possibly an old disk from raid array needs raid flags removing from it.
+```sh
+dmraid -r -E /dev/<device sdb1 or whatever>
+```
