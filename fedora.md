@@ -5,6 +5,7 @@
 - [SSH Keys](#setup-ssh-keys)
 - [Dot files](#dot-files)
 - [Desktop Aesthetics](#desktop-aesthetics)
+- [SAMBA](#samba)
 
 
 ## About
@@ -101,6 +102,20 @@ wget https://raw.githubusercontent.com/sjl/badwolf/master/colors/badwolf.vim -O 
 Open vim and :PlugUpgrade
 
 ## Samba
+What may frustrate you is SELinux turn it off and on
+```sh
+setenforce 0
+setenforce 1
+```
+Better to do this though to any folders you want to share
+```sh
+sudo chcon -R -t samba_share_t /<path to your folder>
+```
+Have an NTFS partition?
+```sh
+sudo setsebool -P samba_share_fusefs on
+```
+
 Install and enable samba and netbios
 ```sh
 sudo dnf sintall -y samba
