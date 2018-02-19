@@ -100,5 +100,32 @@ wget https://raw.githubusercontent.com/sjl/badwolf/master/colors/badwolf.vim -O 
 
 Open vim and :PlugUpgrade
 
+## Samba
+Install and enable samba and netbios
+```sh
+sudo dnf sintall -y samba
+sudo systemctl enable smb nmb
+```
+Punch a hole in the firewall
+```sh
+sudo firewall-cmd --add-service=samba --permanent
+sudo firewall-cmd --reload
+```
+Add user (account must exist on that machine)
+```sh
+sudo pdbedit -a <username>
+```
+Config is /etc/samba/smb.conf need to restart after changes
+```sh
+sudo systemctl restart smb
+```
 
+Example add a share
+```sh
+[Share Name]
+  path = \<folder path>
+  writeable = yes
+  browseable = yes
+  guest ok = no
+```
 
