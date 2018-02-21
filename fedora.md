@@ -6,7 +6,7 @@
 - [Dot files](#dot-files)
 - [Desktop Aesthetics](#desktop-aesthetics)
 - [SAMBA](#samba)
-- [Apple Keyboard](apple-keyboard)
+- [Apple Keyboard](#apple-keyboard)
 
 
 ## About
@@ -160,7 +160,8 @@ Example temporarily get the function keys working as function keys by appending 
 sudo echo "2" | sudo tee /sys/module/hid_apple/parameters/fnmode
 ```
 ctrl-alt f3 then ctrl-alt f2 to test
-This won't survive a restart so add to conf file in modeprobe.d
+This won't survive a restart so add to conf file in modeprobe to pass to driver but it seems the driver is loaded very early hence mkinitcpio
 ```sh
 echo "options hid_apple fnmode=2" | sudo tee /etc/modprobe.d/hid_apple.conf
+echo 'FILES="$FILES:/etc/modprobe.d/hid_apple.conf"' | sudo tee -a /etc/mkinitcpio.conf
 ```
