@@ -6,6 +6,7 @@
 - [Dot files](#dot-files)
 - [Desktop Aesthetics](#desktop-aesthetics)
 - [SAMBA](#samba)
+- [Apple Keyboard](apple-keyboard)
 
 
 ## About
@@ -149,4 +150,17 @@ Example add a share
 Possibly an old disk from raid array needs raid flags removing from it.
 ```sh
 dmraid -r -E /dev/<device sdb1 or whatever>
+```
+
+## Apple Keyboard
+Pipe | key won't work so usually top left under esc ±§
+Need to sort the driver modinfo hid_apple
+Example temporarily get the function keys working as function keys by appending 2 to fnmode
+```sh
+sudo echo "2" | sudo tee /sys/module/hid_apple/parameters/fnmode
+```
+ctrl-alt f3 then ctrl-alt f2 to test
+This won't survive a restart so add to conf file in modeprobe.d
+```sh
+echo "options hid_apple fnmode=2" | sudo tee /etc/modprobe.d/hid_apple.conf
 ```
