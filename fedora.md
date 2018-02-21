@@ -160,8 +160,9 @@ Example temporarily get the function keys working as function keys by appending 
 sudo echo "2" | sudo tee /sys/module/hid_apple/parameters/fnmode
 ```
 ctrl-alt f3 then ctrl-alt f2 to test
-This won't survive a restart so add to conf file in modeprobe to pass to driver but it seems the driver is loaded very early hence mkinitcpio
+This won't survive a restart so add to conf file in modeprobe to pass to driver but it seems the driver is loaded very early hence dracut -f
 ```sh
 echo "options hid_apple fnmode=2" | sudo tee /etc/modprobe.d/hid_apple.conf
-echo 'FILES="$FILES:/etc/modprobe.d/hid_apple.conf"' | sudo tee -a /etc/mkinitcpio.conf
+dracut -f
 ```
+English US keyboard is best you just miss the £ sign you can have multple keyboard and change with <shift><cmd><space>
