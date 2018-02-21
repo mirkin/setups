@@ -165,4 +165,4 @@ This won't survive a restart so add to conf file in modeprobe to pass to driver 
 echo "options hid_apple fnmode=2" | sudo tee /etc/modprobe.d/hid_apple.conf
 dracut -f
 ```
-English US keyboard is best you just miss the £ sign you can have multple keyboard and change with <shift><cmd><space>
+English US keyboard is best you just miss the £ sign you can have multple keyboard and change with \<shift>\<cmd>\<space>
