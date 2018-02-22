@@ -36,3 +36,11 @@ figlet -f larry3d alexander
                                                                        
 ```
 
+## VLC
+Mac play loop write down the seconds for A and B
+Press cmd-J to jump to the start of your loop, then cmd-shift-L to mark it. e.g. 4:34
+Press cmd-J to jump to the end of your loop, then cmd-shift-L to mark it.
+
+You can then watch your loop.
+
+Press cmd-shift-L a third time to cancel the loop.
