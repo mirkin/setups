@@ -24,5 +24,6 @@ brew cask install google-chrome
 brew cask install iterm2
 brew install macvim
 brew cask install iterm2
+brew install youtube-dl
 ```
 
