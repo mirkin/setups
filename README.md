@@ -17,6 +17,8 @@ This is a repo if set up instructions for new installs along with reminders on h
 -Software
   - [Vim/Vi](vim.md)
   - [Figlet](#figlet)
+- Development
+  - [iOS/XCode/Swift](iosdev.md)
   
 ## Figlet
 figlet for ascii art  
