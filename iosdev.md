@@ -1,6 +1,6 @@
 ## About
 
-Notes on iOS dev
+Notes on iOS dev. S4 means swift 4
 
 ## Table of contents
 
@@ -17,17 +17,30 @@ Little hack to auto reformat code
 
 Select All, CopyCut, Paste
 
-##### fileprivate
-Like private, defines an entity (class, extension, property, ...) as private to everybody outside the source file it is declared in, but accessible to all entities in that source file.
+##### Access Levels
+S4
+5 levels 
+
+* open
+
+* public little more restrictive subclass and override than *open* can only subclass in same module
+
+* internal Default access from any source file in the defining module but not outside
+
+* fileprivate Like private, defines an entity (class, extension, property, ...) as private to everybody outside the source file it is declared in, but accessible to all entities in that source file.
+
+* private more restrictive than fileprivate allows use to any extensions in same source file though as of S4
 
 ##### Extensions
+S4
 Add new functionality to an existing class, structure, enumeration, or protocol type even if you don't have the source code.
-Can add new functionality to a type, but they cannot override existing functionality.
+Can add new functionality to a type, but they cannot override existing functionality. You are not creating a new type but modifying the existing type.
 ```swift
 extension SomeType {
     // new functionality to add to SomeType goes here
 }
 ```
+Often used to break the implementation of types up into logical components.
 
 ### Pods
 
