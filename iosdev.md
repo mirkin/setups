@@ -17,6 +17,18 @@ Little hack to auto reformat code
 
 Select All, CopyCut, Paste
 
+##### fileprivate
+Like private, defines an entity (class, extension, property, ...) as private to everybody outside the source file it is declared in, but accessible to all entities in that source file.
+
+##### Extensions
+Add new functionality to an existing class, structure, enumeration, or protocol type even if you don't have the source code.
+Can add new functionality to a type, but they cannot override existing functionality.
+```swift
+extension SomeType {
+    // new functionality to add to SomeType goes here
+}
+```
+
 ### Pods
 
 #### Install
@@ -28,6 +40,7 @@ pod setup --verbose
 
 
 #### Overview
+Keep checking Swift Package Manager one day it will be the best route.
 Download a library and drag source files over into your project? There is a better way. 
 
 Go to your project folder, create podfile and edit it 
@@ -50,12 +63,23 @@ target 'YourProject' do
 end
 ```
 
-Change it to 
+Change as below here we are adding Alamofire as a dependencies just add any you need.
 
 ```
 platform :ios, '11.2'
 
 target 'YourProject' do
   use_frameworks!
+  pod 'Alamofire', '4.4.0'
 end
 ```
+
+Then
+
+```sh
+pod install
+```
+
+Now must always open the project with the .xcworkspace file and not the .xcodeproj.
+
+Now you can import Alamofire in your swift code.
