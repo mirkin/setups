@@ -51,11 +51,11 @@ let x: String?
 var a = x!
 // instead do this
 if let a=x {
-  \\ do something here with a because it does contains something
+    // do something here with a because it does contains something
   }
   else
   {
-  \\ you may want to do smething here which is executed if it was nil
+    // you may want to do smething here which is executed if it was nil
   }
 ```
 nil coalescing operator ??
