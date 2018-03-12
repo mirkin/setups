@@ -44,9 +44,12 @@ Often used to break the implementation of types up into logical components.
 
 ##### Optionals
 Optional either contains something or it's empty (nil)
+Send a message to nil and you app will crash so we need to avoid that
 ```swift
 // declare optional
 let x: String?
+// or less convenient
+let x: Optional<String> 
 // Forced unwrap use ! BAD if it's nil you get an exception 
 var a = x!
 // instead do this
@@ -57,6 +60,13 @@ if let a=x {
   {
     // you may want to do smething here which is executed if it was nil
   }
+  
+/*
+implicitly unwrapped optionals - if you are sure it will never be nil
+WHY? Not many uses could do away with a few 'if let'  use on IBOutlet 
+*/
+let assumedInt: Int! = 123
+let implicitInt: Int = assumedInt
 ```
 nil coalescing operator ??
 ```swift
