@@ -42,6 +42,28 @@ extension SomeType {
 ```
 Often used to break the implementation of types up into logical components.
 
+##### Optionals
+Optional either contains something or it's empty (nil)
+```swift
+// declare optional
+let x: String?
+// Forced unwrap use ! BAD if it's nil you get an exception 
+var a = x!
+// instead do this
+if let a=x {
+  \\ do something here with a because it does contains something
+  }
+  else
+  {
+  \\ you may want to do smething here which is executed if it was nil
+  }
+```
+nil coalescing operator ??
+```swift
+// Can be used to give a default if the optional is nil, otherwise the actual value of the optional is given
+print("Hello, \(name ?? "Anonymous")!")
+```
+
 ### Pods
 
 #### Install
