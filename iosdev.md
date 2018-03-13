@@ -5,9 +5,12 @@ Notes on iOS dev. S4 means swift 4
 ## Table of contents
 
 - [About](#about)
-- X Code IDE
+- [XCode IDE](#xcode-ide)
   - [](#x)
   - [Pods](#pods)
+- [Swift Language](swift-language)
+  
+## XCode IDE
 
 ##### XCode Disk space waste 
 Library>Developer>Xcode>iOS Device Support
@@ -17,6 +20,8 @@ Library>Developer>Xcode>iOS Device Support
 Little hack to auto reformat code
 
 Select All, CopyCut, Paste
+
+## Swift Language
 
 ##### Access Levels
 S4
