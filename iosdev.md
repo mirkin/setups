@@ -8,7 +8,16 @@ Notes on iOS dev. S4 means swift 4
 - [XCode IDE](#xcode-ide)
   - [](#x)
   - [Pods](#pods)
-- [Swift Language](swift-language)
+- [Swift Language](#swift-language)
+  - [Access Levels](#access-levels)
+  - [Extensions](#extensions)
+  - [Let and Var](#let-and-var)
+  - [Optionals](#optionals)
+  - [Subscripts](#subscripts)
+  - [](#x)
+  - [](#x)
+  - [](#x)
+  - [](#x)
   
 ## XCode IDE
 
@@ -23,7 +32,7 @@ Select All, CopyCut, Paste
 
 ## Swift Language
 
-##### Access Levels
+#### Access Levels
 S4
 5 levels 
 
@@ -37,7 +46,7 @@ S4
 
 * private more restrictive than fileprivate allows use to any extensions in same source file though as of S4
 
-##### Extensions
+#### Extensions
 S4
 Add new functionality to an existing class, structure, enumeration, or protocol type even if you don't have the source code.
 Can add new functionality to a type, but they cannot override existing functionality. You are not creating a new type but modifying the existing type.
@@ -48,11 +57,11 @@ extension SomeType {
 ```
 Often used to break the implementation of types up into logical components.
 
-##### let and var
+#### let and var
 let immutable like a constant  
 var mutable 
 
-##### Optionals
+#### Optionals
 
 Optional either contains something or it's empty (nil)  
 Send a message to nil and you app will crash so we need to avoid that
