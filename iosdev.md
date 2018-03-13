@@ -125,7 +125,9 @@ print("Hello, \(name ?? "Anonymous")!")
 
 It doesn't mean you can put a ? then a long line of deep dots and be golden. You still need a ? for every optional in the chain.
 
-Always returns an optional even if the final value in the chain is for example a String or Int you will get a String? or Int?  Query and call properties, methods, and subscripts on an optional we use ?
+Always returns an optional even if the final value in the chain is for example a String or Int you will get a String? or Int?  Query and call properties, methods, and subscripts on an optional we use ?  
+Everything after the question mark will only be run if everything before the question mark has a value
+
 ```swift
 let translation = bingoNames(number: 11)?.someOptionalValue?.someOtherOptionalValue?.whatever
 ```
