@@ -44,13 +44,33 @@ extension SomeType {
 Often used to break the implementation of types up into logical components.
 
 ##### let and var
-let immutable like a constant
+let immutable like a constant  
 var mutable 
 
 ##### Optionals
 
-Optional either contains something or it's empty (nil)
+Optional either contains something or it's empty (nil)  
 Send a message to nil and you app will crash so we need to avoid that
+
+Remember your func can return an optional in that case you can return the type or nil
+
+```swift
+// returns an String? even though you are returning a String in the code
+func bingoNames(number: Int) -> String? {
+    switch number {
+    case 2: return "One little duck"
+    default: return nil
+    }
+}
+
+// returns a non optional String
+func bingoNames(number: Int) -> String {
+    switch number {
+    case 2: return "One little duck"
+    default: return "not sure"
+    }
+}
+```
 
 ```swift
 // declare optional
@@ -84,8 +104,8 @@ if let a=x, let something=somethingelse, a>b && b<c {
 }
 ```
 
-Implicitly unwrapped optionals - if you are sure it will never be nil
-WHY? Not many uses could do away with a few 'if let'  use on IBOutlet 
+Implicitly unwrapped optionals - if you are sure it will never be nil  
+WHY? Not many uses could do away with a few 'if let'  use on IBOutlet  
 Rather than placing an exclamation mark after the optional’s name each time you use it, you place an exclamation mark after the optional’s type when you declare it.
 
 ```swift
@@ -93,7 +113,7 @@ let assumedInt: Int! = 123
 let implicitInt: Int = assumedInt
 ```
 
-You can still use optional binding on an implicitly unwrapped optional.
+You can still use optional binding on an implicitly unwrapped optional. It's still an optional behind the scenes you just don't have to unwrap it.
 
 nil coalescing operator ??
 ```swift
@@ -101,11 +121,70 @@ nil coalescing operator ??
 print("Hello, \(name ?? "Anonymous")!")
 ```
 
-Optional chaining
-Always returns an optional even if the final value in the chain is for example a String or Int you will get a String? or Int?
+*Optional chaining*
+
+It doesn't mean you can put a ? then a long line of deep dots and be golden. You still need a ? for every optional in the chain.
+
+Always returns an optional even if the final value in the chain is for example a String or Int you will get a String? or Int?  Query and call properties, methods, and subscripts on an optional we use ?
+```swift
+let translation = bingoNames(number: 11)?.someOptionalValue?.someOtherOptionalValue?.whatever
+```
 
 
 ```swift
+func bingoNames(number: Int) -> String? {
+    switch number {
+    case 2: return "One little duck"
+    case 11: return "Legs eleven"
+    default: return nil
+    }
+}
+
+//Forced unwrapping
+var translation = bingoNames(number:2)!
+print("The translation is \(translation)")
+//prints "The translation is One little duck\n" as it's a String
+
+//optional chaining translationB is a String?
+let translationB = bingoNames(number:11)?.uppercased()
+print("The translation is \(translationB)")
+
+//optional binding translationC is a String
+if let translationC=bingoNames(number:2)
+{
+    print("The translation is \(translationC)")
+    //prints "The translation is One little duck\n"
+}
+
+//Forced unwrapping translationD is a String
+var translationD = bingoNames(number:11)!
+print("The translation is \(translationD)")
+```
+
+#### Subscripts
+Classes, structures, and enumerations can define subscripts.   
+Lets you get and set using []  
+Simple example below but you can include multiple input params mything[1,3] and can overload multiple subscripts are inferred based on the types of values that are declared within the subscript braces.
+
+```swift
+class daysofaweek {
+   private var days = ["Sunday", "Monday", "Tuesday", "Wednesday",
+      "Thursday", "Friday", "saturday"]
+   subscript(index: Int) -> String {
+      get {
+         return days[index]
+      }
+      set(newValue) {
+         self.days[index] = newValue
+      }
+   }
+}
+var p = daysofaweek()
+
+print(p[0])
+print(p[1])
+print(p[2])
+print(p[3])
 ```
 
 ### Pods
@@ -119,7 +198,7 @@ pod setup --verbose
 
 
 #### Overview
-Keep checking Swift Package Manager one day it will be the best route.
+Keep checking Swift Package Manager one day it will be the best route.  
 Download a library and drag source files over into your project? There is a better way. 
 
 Go to your project folder, create podfile and edit it 
