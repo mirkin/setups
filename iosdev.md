@@ -118,7 +118,7 @@ if let a=x, let something=somethingelse, a>b && b<c {
 }
 ```
 
-Implicitly unwrapped optionals - if you are sure it will never be nil  
+**Implicitly unwrapped optionals** - if you are sure it will never be nil  
 WHY? Not many uses could do away with a few 'if let'  use on IBOutlet  
 Rather than placing an exclamation mark after the optional’s name each time you use it, you place an exclamation mark after the optional’s type when you declare it.
 
@@ -135,7 +135,7 @@ nil coalescing operator ??
 print("Hello, \(name ?? "Anonymous")!")
 ```
 
-*Optional chaining*
+**Optional chaining**
 
 It doesn't mean you can put a ? then a long line of deep dots and be golden. You still need a ? for every optional in the chain.
 
@@ -232,15 +232,15 @@ Spacing - Takes precedence over the view's intrinsic content size. Will shrink v
 Distribution - 
 Modifies size of views FILL(default), FILL EQUALLY, FILL PROPORTIONALLY
 Works hard not to modify size of view EQUAL SPACING, EQUAL CENTERING
-Equal Spacing - tried not to change intrinsic size, distribute along available space equal seperation. Not enough space, it will reduce the size ov the views starting with those with lowest compression resistance. If all same comp resist it will shrink first one from the left.
-Equal Centering - Similar instead of measuring seperation from edges it measures from their center.
-Fill equally - divides all space in equal chunks amonh available views. IF intrinsic content size needs changing then it will.
-Fill proportionally - If size of views not matching avaialable space will change size of views keeping compression resistance and hugging priority in mind. Tweakable with comp resist and hug priority.
-Fill - Similar but will try to change the first view.
+* Equal Spacing - tried not to change intrinsic size, distribute along available space equal seperation. Not enough space, it will reduce the size ov the views starting with those with lowest compression resistance. If all same comp resist it will shrink first one from the left.
+* Equal Centering - Similar instead of measuring seperation from edges it measures from their center.
+* Fill equally - divides all space in equal chunks amonh available views. IF intrinsic content size needs changing then it will.
+* Fill proportionally - If size of views not matching avaialable space will change size of views keeping compression resistance and hugging priority in mind. Tweakable with comp resist and hug priority.
+* Fill - Similar but will try to change the first view.
 
-Alignment - controls how views expand perpendicular to the axis.
-Horizontal axis stackview you have top middle and bottom
-Vertical axis stackview left center or right
+* Alignment - controls how views expand perpendicular to the axis.
+* Horizontal axis stackview you have top middle and bottom
+* Vertical axis stackview left center or right
 
 Horizontal text stack views aligns by baseline 
 
