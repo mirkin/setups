@@ -203,6 +203,54 @@ print(p[2])
 print(p[3])
 ```
 
+#### Auto Layout and StackViews
+
+TIPS.
+
+Use stackviews first only use constraints if you can't do what you want with a stackview
+
+Evolve it from the details don't try to do the whole thing right away work on a small part from the inside.
+
+Xcode may look wrong as it's buggy trust devices and simulator more.
+
+1. Start tweaking properties of stack view. 
+2. If you don't get what you want then use another stack view. (Stack view in stack view)
+3. Still not right? Tweak compression resistance or hugging priority of views in stack view.
+4. Still can't get what you want? Add constraints to the stack view.
+5. Last resort add constraints to the views.
+6. To connect views within different stackviews see 5.
+7. Worst case, use a filler view.
+
+Constraint
+
+You can see the equation in the top bar
+FirstItem=SecondItem*multiplier+constant
+For edges use the value Standard for their default
+
+Axis - Horizontal vertical  
+Spacing - Takes precedence over the view's intrinsic content size. Will shrink view rather than spacing if limited space. Can be negative which will overlap views.
+Distribution - 
+Modifies size of views FILL(default), FILL EQUALLY, FILL PROPORTIONALLY
+Works hard not to modify size of view EQUAL SPACING, EQUAL CENTERING
+Equal Spacing - tried not to change intrinsic size, distribute along available space equal seperation. Not enough space, it will reduce the size ov the views starting with those with lowest compression resistance. If all same comp resist it will shrink first one from the left.
+Equal Centering - Similar instead of measuring seperation from edges it measures from their center.
+Fill equally - divides all space in equal chunks amonh available views. IF intrinsic content size needs changing then it will.
+Fill proportionally - If size of views not matching avaialable space will change size of views keeping compression resistance and hugging priority in mind. Tweakable with comp resist and hug priority.
+Fill - Similar but will try to change the first view.
+
+Alignment - controls how views expand perpendicular to the axis.
+Horizontal axis stackview you have top middle and bottom
+Vertical axis stackview left center or right
+
+Horizontal text stack views aligns by baseline 
+
+Low content hugging stretch before one with higher value
+
+Editor>Canvas>Show Layout Rectangles
+Editor>Canvas>Show Involved View For Selected Constraints
+
+
+
 ### Pods
 
 #### Install
