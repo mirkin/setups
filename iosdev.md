@@ -21,6 +21,11 @@ Notes on iOS dev. S4 means swift 4
   
 ## XCode IDE
 
+##### No Soft Keyboard In Simulator
+Deselect 
+Hardware>Keyboard>Connect Hardware Keyboard
+cmd shift K
+
 ##### XCode Disk space waste 
 Library>Developer>Xcode>iOS Device Support
 
