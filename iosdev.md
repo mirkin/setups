@@ -254,6 +254,71 @@ Low content hugging stretch before one with higher value
 Editor>Canvas>Show Layout Rectangles
 Editor>Canvas>Show Involved View For Selected Constraints
 
+#### Save Data
+
+Each app in it's own sandbox. 3 main containers.
+
+* Bundle Container - thing.app executable code and resources
+* Data Container - Sub folders Documents, Library, Temp
+  * Documents for user data and inportant stuff Documents/Inbox
+  * Library non user data Library/Appications Suppport Library/Caches files you don't want to expose to the user
+  * Temp not going to persists betwen launches
+* tmp like Library/Caches but deleted more often
+* iCloud Container
+
+
+UserDefaults - If your data is <1meg good for little settings and preferences. (used to be called NSUserDefaults)
+Library/Preferences/info.myapp.mobile.plist
+
+UserDefaults.standard gets shared defaults singleton object.
+UserDefaults.standard.value(forKey: String)
+UserDefaults.standard.float(forKey: String)
+UserDefaults.standard.bool(forKey: String)
+UserDefaults.standard.set(value: Any?, forKey: String)
+
+```swift
+func checkIfFirstLaunch() {
+    if UserDefaults.standard.bool(forKey: "hasLaunchedBefore") {
+        print("App has launched before")
+    } else {
+        print("This is the first launch ever!")
+        UserDefaults.standard.set(true, forKey: "hasLaunchedBefore")
+        UserDefaults.standard.set(false, forKey: "mute")
+        UserDefaults.standard.synchronize()
+    }
+}
+```
+
+Or save your own files
+FileManager - get path to sandbox
+String to read/write text files Data to read/write binary files
+
+```swift
+    let fm = FileManager.default
+    let urls = fm.urls(for: .documentDirectory, in: .userDomainMask)
+    let url = urls.last?.appendingPathComponent("file.txt")
+    do {
+        try "Hi There!".write(to: url!, atomically: true, encoding: String.Encoding.utf8)
+    } catch {
+        print("Error while writing")
+    }
+
+    do {
+        let content = try String(contentsOf: url!, encoding: String.Encoding.utf8)
+
+        if content == "Hi There!" {
+            print("yay")
+        } else {
+            print("oops")
+        }
+    } catch {
+        print("Something went wrong")
+    }
+```
+
+### Core Data
+
+Framework to manage your data Data Model (Structure and Relationships) and Related Code is the Data Layer
 
 
 ### Pods
