@@ -456,6 +456,8 @@ Delete
 
 Saving can cause a pause in the app, if you aren't sure if there are changes to save check dataController.viewContext.hasChanges or write NSManagedObject extension to check .hasChanges and mande save errors.
 
+Faulting - Relationships aren't loaded by default just loaded when needed. You can manage faulting and uniquing yourself to fault something you already loaded to save memory or to load more initially so it doesn't need to load on demand later.
+
 ### Pods
 
 #### Install
