@@ -318,6 +318,9 @@ String to read/write text files Data to read/write binary files
 
 ### Core Data
 
+Useful links
+[https://github.com/objcio/core-data](https://github.com/objcio/core-data)
+
 Framework to manage your data Data Model (Structure and Relationships) and Related Code is the Data Layer
 
 Alternatives Realm Firebase or use SQLite directly
@@ -356,6 +359,102 @@ Core Data Stack
 * Managed Object Model - Describes attributes and repationships usually defined in data model editor in xcode .xcdatamodeld compiled into a .momd
 * Persistant Store Coordinator - Connects to 1 or more persistent stores and used model and context. It talks to SQL etc. so it's abstracted away from the dev.
 * Persistent Container - Introduced iOS10 to reduce boildplate to set up stack. Helps set up stack and has methods and vars to work with contexts
+
+Write this little utility to help make things easier and share it to your viewcontroller.
+
+DataController.swift
+```swift
+import Foundation
+import CoreData
+
+class DataController
+{
+    let persistentContainer:NSPersistentContainer
+    
+    /*
+     Computed property to access view context
+    */
+    var viewContext:NSManagedObjectContext {
+        return persistentContainer.viewContext
+    }
+    
+    init(modelName:String){
+        persistentContainer=NSPersistentContainer(name:modelName)
+    }
+    
+    /*
+    Load the persistent store, Takes optional completion closure
+    Uses Trailing Closure syntax hence odd looking code
+    */
+    func load(completion:(()->Void)?=nil){
+        persistentContainer.loadPersistentStores { storeDescription, error in
+            guard error == nil else {
+                fatalError(error!.localizedDescription)
+            }
+            completion?()
+        }
+    }
+    
+}
+```
+
+In your first view 
+```swift
+var dataController:DataController
+```
+
+In your AppDelegate you will inject data dependency into your first view controller
+```swift
+    // MyModel is name of .xcdatamodeld
+    let dataContoler=DataController(modelName: "MyModel")
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        // trailing closure syntax
+        dataController.load {
+            //called once persistant store loaded
+            // show loading interface while loading then switch to main UI
+        }
+        //configure the first view, lets get at it
+        let navigationController = window?.rootViewController as! UINavigationController
+        let firstViewController=navigationController.topViewController as! FirstViewController
+        firstViewController.dataController=dataController
+        return true
+    }
+```
+
+Fetch Request is like SELECT Predicate like WHERE SortDesciptors like ORDER BY
+Fetch data from persistant store into context
+
+```swift
+  var myEntitys:[MyEntity]=[]
+  let fetchRequest:NSFetchRequest<MyEntity> = MyEntity.fetchRequest()
+  let sortDescriptor = NSSortDescriptor(key:"creationDate",ascending:false)
+  fetchRequest.sortDescriptors=[sortDescriptor]
+  if let result = try? dataController.viewContext.fetch(fetchRequest){
+      myEntitys=result
+      tableView.reloadData()
+  }
+```
+
+Make changes in a context and ask to make changes to persistent store
+
+```swift
+  let myEntity = MyEntity(context: dataController.viewContext)
+  myEntity.name = name
+  myEntity.creationDate = Date()
+  try? dataController.viewContext.save()
+  myEntitys.insert(myEntity, at:0)
+```
+
+Delete
+
+```swift
+  let entityToDelete = myEntitys[index]
+  dataController.viewContext.delete(entityToDelete)
+  try? dataController.viewContext.save()
+```
+
+Saving can cause a pause in the app, if you aren't sure if there are changes to save check dataController.viewContext.hasChanges or write NSManagedObject extension to check .hasChanges and mande save errors.
 
 ### Pods
 
