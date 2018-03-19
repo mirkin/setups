@@ -320,6 +320,42 @@ String to read/write text files Data to read/write binary files
 
 Framework to manage your data Data Model (Structure and Relationships) and Related Code is the Data Layer
 
+Alternatives Realm Firebase or use SQLite directly
+
+Saves to *persistent store* 
+* SQlite (default)
+* binary
+* in-memory
+
+New>File>Data Model creates .xcdatamodeld
+Add and rename your entities in the visual editor graph view (schema) and table view
+Entities are like tables attibutes like fields/columns
+
+CodeGen -> Class Definition automatically creates the code, the files are deep in derived data and you shouldn't manually edit them but you can take a peek to see how it all works. So what do we do if we can't mess with this file? *Extension*
+
+Create new file MyModel+Extra.swift
+```swift
+extension MyModel {
+  // all your custom code
+}
+```
+
+CodeGen -> Category Extension Xcode gen properties file but not class definition so you need to do your own class file but properties will be done for you even if they change. Stored properties can'be be done in an extenstion so this can be the way to go for that.
+
+CodeGen -> Manual/none No code gen, most work, most flexibility
+
+Attributes and relationships start with lowercase
+
+Relationships, graph view ctrl drag to create. Click on the relationship to rename.
+Delete Rule-> Cascade kind of obvious children are deleted too, nullify you can delete the item but only the relatonship to the other end is deleted.
+Relationship-> obvious 1 to many etc.
+
+Core Data Stack
+
+* Managed Object Context(s) - ManagedObjectContext instances scratchpad to create and manipulate when we are done we can roll back or save to permanent store. Changes made while in the context are not saved to disk or update UI. You never instantiate a managed object directly (let Thing=Thing()) you associate with a context (Thing(context:))
+* Managed Object Model - Describes attributes and repationships usually defined in data model editor in xcode .xcdatamodeld compiled into a .momd
+* Persistant Store Coordinator - Connects to 1 or more persistent stores and used model and context. It talks to SQL etc. so it's abstracted away from the dev.
+* Persistent Container - Introduced iOS10 to reduce boildplate to set up stack. Helps set up stack and has methods and vars to work with contexts
 
 ### Pods
 
