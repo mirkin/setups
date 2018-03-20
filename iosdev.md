@@ -524,6 +524,8 @@ let predicate = NSPredicate(format: "length = %d", 4)
 let shortNames = (names as NSArray).filtered(using: predicate) // "Alex", "Jack"
 ```
 
+Easier to explain using code
+
 ```swift
 // A Person!
 class Person: NSObject {
@@ -541,18 +543,23 @@ let people = [ Person(name: "Tray", age:12), Person(name:"May", age:15), Person(
 
 let predicate1 = NSPredicate(format: "name LIKE %@", "?ay") // wildcard query for a word with “a” and “y” as the 2nd and 3rd letters
 let predicate2 = NSPredicate(format: "name LIKE %@", "T*") // wildcard query for names starting with “T”
-
 let predicate3 = NSPredicate(format: "age < 20")
-
 let predicate4 = NSPredicate(format: "name LIKE[c] %@", "t*")  // [c] makes case insensitive [d] ignore diacritics (accents etc)
-
 let predicate5 = NSPredicate(format: "%K = %d", "age", 23) // %K is attribute name or key path age == 23
+let predicate6 = NSPredicate(format: "age BETWEEN {15, 55}")
+let predicate7 = NSPredicate(format:"(age < 23) AND (name LIKE 'T*')")
+let predicate8 = NSPredicate(format:"age < 23")
+let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate2, predicate8]) // name LIKE "T*" AND age < 23
 
 let result1 = (people as NSArray).filtered(using: predicate1) // May
 let result2 = (people as NSArray).filtered(using: predicate2) // Tray, Teresa
 let result3 = (people as NSArray).filtered(using: predicate3) // Tray, May
 let result4 = (people as NSArray).filtered(using: predicate4) // Tray, Teresa
 let result5 = (people as NSArray).filtered(using: predicate5) // Teresa
+let result6 = (people as NSArray).filtered(using: predicate6) // May, Teresa
+let result7 = (people as NSArray).filtered(using: predicate7) // Tray
+
+let result8 = (people as NSArray).filtered(using: compoundPredicate) // Tray
 ```
 
 ### Pods
