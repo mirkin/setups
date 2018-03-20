@@ -22,6 +22,7 @@ Notes on iOS dev. S4 means swift 4
     - [UserDefaults](#userdefaults)
     - [Roll Your Own Files](#roll-your-own-files)
     - [Core Data](#core-data)
+  - [Predicates](#predicates)
   - [](#x)
   - [](#x)
   - [](#x)
