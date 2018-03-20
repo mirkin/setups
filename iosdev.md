@@ -30,15 +30,23 @@ Notes on iOS dev. S4 means swift 4
   
 ## XCode IDE
 
-##### No Soft Keyboard In Simulator
+Top of the editor window you can pulldown to go string to function definition.
+You can also select a function call and jump to definition.
+
+#### Handy Refactor Functionality
+Select some code in a function right click refactor>extract method and it will pull it out into it's own new function and call that function from where it used to be. Useful!
+
+Use refactor to rename functions and variables so it will spread through the code and change everything.
+
+#### No Soft Keyboard In Simulator
 Deselect 
 Hardware>Keyboard>Connect Hardware Keyboard
 cmd shift K
 
-##### XCode Disk space waste 
+#### XCode Disk space waste 
 Library>Developer>Xcode>iOS Device Support
 
-##### Format code
+#### Format code
 
 Little hack to auto reformat code
 
