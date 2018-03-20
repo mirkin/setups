@@ -512,6 +512,49 @@ Example if we have a parent with one to many relationship to children we could f
   }
 ```
 
+### Predicates
+
+Like SQL and Regex to search Arrays, Collections, Core Data
+Use = or == they are the same can use BEGINSWITH, ENDSWITH and CONTAINS
+
+```swift
+//NSPredicate(format: "attribute = %@", someValue)
+let names: [NSString] = [ "Bobby", "Alex", "Jack" ]
+let predicate = NSPredicate(format: "length = %d", 4)
+let shortNames = (names as NSArray).filtered(using: predicate) // "Alex", "Jack"
+```
+
+```swift
+// A Person!
+class Person: NSObject {
+    @objc var name: String
+    @objc var age: Int
+    
+    init(name: String, age: Int) {
+        self.name = name
+        self.age = age
+        super.init()
+    }
+}
+
+let people = [ Person(name: "Tray", age:12), Person(name:"May", age:15), Person(name:"Teresa", age:23) ]
+
+let predicate1 = NSPredicate(format: "name LIKE %@", "?ay") // wildcard query for a word with “a” and “y” as the 2nd and 3rd letters
+let predicate2 = NSPredicate(format: "name LIKE %@", "T*") // wildcard query for names starting with “T”
+
+let predicate3 = NSPredicate(format: "age < 20")
+
+let predicate4 = NSPredicate(format: "name LIKE[c] %@", "t*")  // [c] makes case insensitive [d] ignore diacritics (accents etc)
+
+let predicate5 = NSPredicate(format: "%K = %d", "age", 23) // %K is attribute name or key path age == 23
+
+let result1 = (people as NSArray).filtered(using: predicate1) // May
+let result2 = (people as NSArray).filtered(using: predicate2) // Tray, Teresa
+let result3 = (people as NSArray).filtered(using: predicate3) // Tray, May
+let result4 = (people as NSArray).filtered(using: predicate4) // Tray, Teresa
+let result5 = (people as NSArray).filtered(using: predicate5) // Teresa
+```
+
 ### Pods
 
 #### Install
