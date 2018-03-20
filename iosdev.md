@@ -581,6 +581,29 @@ extension MyManagedObject {
 }
 ```
 
+### Fetched Results Controller
+
+Sits between views and model, listens for changes to model and triggers logic to update views.
+
+Recap - Every managed object instance is registered to a (managed object) context.
+
+Whenver a managed object changes or the context is saved Core Data automatically generates notifications. Like NSManagedObject ContextObjectDidChange.
+
+You could use NotificationCenter to subscribe to core data notifications but more convenient to use FetchedResultsController because they work well with table views and collection views.
+
+Note. FetchedResultsController fetchRequest must be sorted so it has a consistent ordering
+
+MyViewController.swift
+```swift
+var fetchedResultsController:NSFetchedResultsController<MyManagedObject>!
+
+override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        // tear it down
+        fetchedResultsController = nil
+    }
+```
+
 ### Predicates
 
 Like SQL and Regex to search Arrays, Collections, Core Data
