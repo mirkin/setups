@@ -13,7 +13,15 @@ Notes on iOS dev. S4 means swift 4
   - [Extensions](#extensions)
   - [Let and Var](#let-and-var)
   - [Optionals](#optionals)
+    - [Implicitly unwrapped optionals](#implicitly-unwrapped-optionals)
+    - [Optional chaining](#optional-chaining)
   - [Subscripts](#subscripts)
+  - [Auto Layout and StackViews](#auto-layout-and-stackViews)
+  - [Saving Data](#saving-data)
+    - [File Structure](#file-structure)
+    - [UserDefaults](#userdefaults)
+    - [Roll Your Own Files](#roll-your-own-files)
+    - [Core Data](#core-data)
   - [](#x)
   - [](#x)
   - [](#x)
@@ -37,7 +45,7 @@ Select All, CopyCut, Paste
 
 ## Swift Language
 
-#### Access Levels
+### Access Levels
 S4
 5 levels 
 
@@ -51,7 +59,7 @@ S4
 
 * private more restrictive than fileprivate allows use to any extensions in same source file though as of S4
 
-#### Extensions
+### Extensions
 S4
 Add new functionality to an existing class, structure, enumeration, or protocol type even if you don't have the source code.
 Can add new functionality to a type, but they cannot override existing functionality. You are not creating a new type but modifying the existing type.
@@ -62,11 +70,11 @@ extension SomeType {
 ```
 Often used to break the implementation of types up into logical components.
 
-#### let and var
+### let and var
 let immutable like a constant  
 var mutable 
 
-#### Optionals
+### Optionals
 
 Optional either contains something or it's empty (nil)  
 Send a message to nil and you app will crash so we need to avoid that
@@ -123,7 +131,8 @@ if let a=x, let something=somethingelse, a>b && b<c {
 }
 ```
 
-**Implicitly unwrapped optionals** - if you are sure it will never be nil  
+### Implicitly unwrapped optionals
+If you are sure it will never be nil  
 WHY? Not many uses could do away with a few 'if let'  use on IBOutlet  
 Rather than placing an exclamation mark after the optional’s name each time you use it, you place an exclamation mark after the optional’s type when you declare it.
 
@@ -140,7 +149,7 @@ nil coalescing operator ??
 print("Hello, \(name ?? "Anonymous")!")
 ```
 
-**Optional chaining**
+### Optional chaining
 
 It doesn't mean you can put a ? then a long line of deep dots and be golden. You still need a ? for every optional in the chain.
 
@@ -182,7 +191,7 @@ var translationD = bingoNames(number:11)!
 print("The translation is \(translationD)")
 ```
 
-#### Subscripts
+### Subscripts
 Classes, structures, and enumerations can define subscripts.   
 Lets you get and set using []  
 Simple example below but you can include multiple input params mything[1,3] and can overload multiple subscripts are inferred based on the types of values that are declared within the subscript braces.
@@ -208,7 +217,7 @@ print(p[2])
 print(p[3])
 ```
 
-#### Auto Layout and StackViews
+### Auto Layout and StackViews
 
 TIPS.
 
@@ -254,7 +263,9 @@ Low content hugging stretch before one with higher value
 Editor>Canvas>Show Layout Rectangles
 Editor>Canvas>Show Involved View For Selected Constraints
 
-#### Save Data
+### Saving Data
+
+### File Structure
 
 Each app in it's own sandbox. 3 main containers.
 
@@ -266,8 +277,9 @@ Each app in it's own sandbox. 3 main containers.
 * tmp like Library/Caches but deleted more often
 * iCloud Container
 
+### UserDefaults
 
-UserDefaults - If your data is <1meg good for little settings and preferences. (used to be called NSUserDefaults)
+UserDefaults - If your data is < 1 Meg good for little settings and preferences. (used to be called NSUserDefaults)
 Library/Preferences/info.myapp.mobile.plist
 
 UserDefaults.standard gets shared defaults singleton object.
@@ -289,7 +301,8 @@ func checkIfFirstLaunch() {
 }
 ```
 
-Or save your own files
+### Roll Your Own Files
+
 FileManager - get path to sandbox
 String to read/write text files Data to read/write binary files
 
@@ -457,6 +470,21 @@ Delete
 Saving can cause a pause in the app, if you aren't sure if there are changes to save check dataController.viewContext.hasChanges or write NSManagedObject extension to check .hasChanges and mande save errors.
 
 Faulting - Relationships aren't loaded by default just loaded when needed. You can manage faulting and uniquing yourself to fault something you already loaded to save memory or to load more initially so it doesn't need to load on demand later.
+
+Example if we have a parent with one to many relationship to children we could fetch the parent and the choldren would be faulted hence loaded when needed. Or we could use another fetch to get the children and use a predicate to only get the children of a particular parent.
+
+```swift
+  var children:[ChildClass]=[]
+  let fetchRequest:NSFetchRequest<ChildClass> = ChildClass.fetchRequest()
+  let predicate = NSPredicate(format: "parent == %@", parent)
+  fetchRequest.predicate = predicate
+  let sortDescriptor = NSSortDescriptor(key:"creationDate",ascending:false)
+  fetchRequest.sortDescriptors=[sortDescriptor]
+  if let result = try? dataController.viewContext.fetch(fetchRequest){
+    children=result
+    tableView.reloadData()
+  }
+```
 
 ### Pods
 
