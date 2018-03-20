@@ -72,6 +72,8 @@ You can pass and share between views using prepare(for seque:) in your view cont
   }
 ```
 
+**Dependency Injection** or **Singleton** Singleton avoids possibility of creating multiple instances and I've used it non stop in other languages. Unit testing can be easier with Dependency Injection. 
+
 ### Access Levels
 S4
 5 levels 
@@ -370,9 +372,12 @@ Saves to *persistent store*
 * binary
 * in-memory
 
-New>File>Data Model creates .xcdatamodeld
-Add and rename your entities in the visual editor graph view (schema) and table view
-Entities are like tables attibutes like fields/columns
+Create a data model in core data using the editor
+
+New>File>Data Model creates .xcdatamodeld  
+Add and rename your entities in the visual editor graph view (schema) and table view  
+Entities are like tables attibutes like fields/columns  
+You can set default values  
 
 CodeGen -> Class Definition automatically creates the code, the files are deep in derived data and you shouldn't manually edit them but you can take a peek to see how it all works. So what do we do if we can't mess with this file? *Extension*
 
@@ -393,7 +398,7 @@ Relationships, graph view ctrl drag to create. Click on the relationship to rena
 Delete Rule-> Cascade kind of obvious children are deleted too, nullify you can delete the item but only the relatonship to the other end is deleted.
 Relationship-> obvious 1 to many etc.
 
-Core Data Stack
+#### Core Data Stack
 
 * Managed Object Context(s) - ManagedObjectContext instances scratchpad to create and manipulate when we are done we can roll back or save to permanent store. Changes made while in the context are not saved to disk or update UI. You never instantiate a managed object directly (let Thing=Thing()) you associate with a context (Thing(context:))
 * Managed Object Model - Describes attributes and repationships usually defined in data model editor in xcode .xcdatamodeld compiled into a .momd
@@ -494,7 +499,45 @@ Delete
   try? dataController.viewContext.save()
 ```
 
-Saving can cause a pause in the app, if you aren't sure if there are changes to save check dataController.viewContext.hasChanges or write NSManagedObject extension to check .hasChanges and mande save errors.
+Saving can cause a user perceptable delay in the app, if you aren't sure if there are changes to save check dataController.viewContext.hasChanges or write NSManagedObject extension to check .hasChanges and manage save errors.
+
+Save in AppDelegate when it enters background or terminates. 
+
+```swift
+  func applicationDidEnterBackground(_ application: UIApplication) {
+      saveViewContext()
+  }
+
+  func applicationWillTerminate(_ application: UIApplication) {
+      saveViewContext()
+  }
+
+  func saveViewContext() {
+      try? dataController.viewContext.save()
+  }
+```
+
+How about Autosave if they are typing in text
+
+```swift
+extension DataController {
+    func autoSaveViewContext(interval:TimeInterval = 30) {
+        print("autosaving")
+        guard interval > 0 else
+        {
+            print("negative autosave interval? think again")
+            return
+        }
+        if viewContext.hasChanges {
+             try? viewContext.save()
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now()+interval) {
+            self.autoSaveViewContext(interval: interval)
+        }
+       
+    }
+}
+```
 
 Faulting - Relationships aren't loaded by default just loaded when needed. You can manage faulting and uniquing yourself to fault something you already loaded to save memory or to load more initially so it doesn't need to load on demand later.
 
@@ -511,6 +554,23 @@ Example if we have a parent with one to many relationship to children we could f
     children=result
     tableView.reloadData()
   }
+```
+
+You need a reference to the managedObjectContext to save etc. we are using a this dataController variable we inject all the time but you can also get a context from the managed object. Managed objects hold a ref to their context so myThing.managedObjectContext?.save() you may be working with multiple contexts.
+
+NSManagedObject has lifecycle methods you can override. wilSave() prepareForDeletion() etc.   
+awakeFromInsert() you can set your object up when it's created. Remember you don't want to mess with the generated code so write and extension. To be organised make a new group/folder 'Managed Object Extensions' probably stick it in models group/folder then put your MyManagedObject+Extensions.swift files in there for each managed object you want to do it with.
+
+```swift
+import CoreData
+
+extension MyManagedObject {
+    public override func awakeFromInsert() {
+        super.awakeFromInsert()
+        creationDate = Date()
+        otherStuff = "whatever man"
+    }
+}
 ```
 
 ### Predicates
