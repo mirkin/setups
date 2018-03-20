@@ -45,6 +45,32 @@ Select All, CopyCut, Paste
 
 ## Swift Language
 
+### 
+
+You can use AppDelegate to get to the first view, downcast it and set any variables you need.
+
+AppDelegate.swift
+```swift
+  let myThing=MyThing(arg: "Hi there")
+
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    //configure the first view, lets get at it
+    let navigationController = window?.rootViewController as! UINavigationController
+    let firstViewController=navigationController.topViewController as! MyViewController
+    firstViewController.myThing=myThing
+    return true
+  }
+```
+
+You can pass and share between views using prepare(for seque:) in your view controller
+```swift
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+      if let vc = segue.destination as? MyViewController {
+          vc.myVariable=self.myVariable
+      }
+  }
+```
+
 ### Access Levels
 S4
 5 levels 
