@@ -17,6 +17,7 @@ Notes on iOS dev. S4 means swift 4
     - [Optional chaining](#optional-chaining)
   - [Subscripts](#subscripts)
   - [Functions](#functions)
+    -[Parameters](#parameters)
   - [Generics](#generics)
   - [Auto Layout and StackViews](#auto-layout-and-stackViews)
   - [Saving Data](#saving-data)
@@ -271,7 +272,7 @@ print(bingo(bingoText: "legs eleven", bingoNumber:11))
 
 ### Parameters
 
-Parameters are constants see [In-Out Parameters](in-out-parameters)
+Parameters are constants see [In-Out Parameters](#in-out-parameters)
 
 Warning there are 2 names used in arguments. **Argument label** - used when calling the function and **Parameter Name** used in the func. Normally just use parameter name as above and argument labels are assumed to be the same. See below for Argument Labels.
 
@@ -304,6 +305,7 @@ print(bingoD("legs eleven")) // legs eleven 11
 ```
 
 #### Variadic Parameters
+
 Param with 0 or more values of a type. You get that param as an array of that type. Use Type...
 
 ```swift
@@ -319,8 +321,21 @@ arithmeticMean(1, 2, 3, 4, 5)
 
 #### In-Out Parameters
 
+For a parameter that needs to change, it must be a variable can't be literal or constant obviously. No default values allowed.
+```swift
+func swapTwoInts(_ a: inout Int, _ b: inout Int) {
+    let temporaryA = a
+    a = b
+    b = temporaryA
+}
+var someInt = 3
+var anotherInt = 107
+swapTwoInts(&someInt, &anotherInt)
+print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
+// Prints "someInt is now 107, and anotherInt is now 3"
+```
 
-
+#### Function Overloading
 Function overloading is fine, if you don't specify a return value void is assumed which is an empty tuple ().
 
 Multiple return values use tuple as return. Optional tuple is also allowed -> (thingA: String, thingB: String)?
@@ -334,6 +349,45 @@ func crud() -> (thingA: String, thingB: String)
 var x = crud()
 print(x.thingB) // paul
 ```
+
+#### Function Types
+
+Crazy, by now I'm used to having variables that hold functions from other languages. Here the combination of parameters and return type can be a type. So a varaible can be delclared 
+```swift
+var mathFunction: (Int, Int) -> Int 
+```
+and can be assigned any function that matches that type. (takes 2 Ints and returns an Int)
+
+You can used these as parameters or return values from functions.
+```swift
+// as params
+func printMathResult(_ mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
+    print("Result: \(mathFunction(a, b))")
+}
+printMathResult(addTwoInts, 3, 5)
+// Prints "Result: 8"
+
+
+//or as return type
+func stepForward(_ input: Int) -> Int {
+    return input + 1
+}
+func stepBackward(_ input: Int) -> Int {
+    return input - 1
+}
+func chooseStepFunction(backward: Bool) -> (Int) -> Int {
+    return backward ? stepBackward : stepForward
+}
+var currentValue = 3
+let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
+// moveNearerToZero now refers to the stepBackward() function
+
+```
+
+#### Nested Functions
+No problem you can do this.
+
+
 
 ### Generics
 
