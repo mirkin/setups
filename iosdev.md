@@ -16,6 +16,7 @@ Notes on iOS dev. S4 means swift 4
     - [Implicitly unwrapped optionals](#implicitly-unwrapped-optionals)
     - [Optional chaining](#optional-chaining)
   - [Subscripts](#subscripts)
+  - [Generics](#generics)
   - [Auto Layout and StackViews](#auto-layout-and-stackViews)
   - [Saving Data](#saving-data)
     - [File Structure](#file-structure)
@@ -254,6 +255,9 @@ print(p[1])
 print(p[2])
 print(p[3])
 ```
+
+### Generics
+Array and Dictonary are generics
 
 ### Auto Layout and StackViews
 
@@ -617,8 +621,7 @@ class MyViewController: UIViewController, UITableViewDataSource, NSFetchedResult
         let fetchRequest:NSFetchRequest<MyManagedObject> = MyManagedObject.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key:"creationDate",ascending:false)
         fetchRequest.sortDescriptors=[sortDescriptor]
-        
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: "myCache")
         fetchedResultsController.delegate=self
         
         do {
@@ -678,7 +681,7 @@ override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     }
 ```
 
-Organise into an extension
+Organise into an extension. 
 
 ```swift
 extension MyViewController:NSFetchedResultsControllerDelegate {
@@ -697,14 +700,41 @@ extension MyViewController:NSFetchedResultsControllerDelegate {
             tableView.insertRows(at: [newIndexPath!], with: .fade)
         case .delete:
             tableView.deleteRows(at: [indexPath!], with: .fade)
-        default:
-            break
+        case .update:
+            tableView.reloadRows(at: [indexPath!], with: .fade)
+        case .move:
+            tableView.moveRow(at: indexPath!, to: newIndexPath!)
         }
     }
 }
 ```
 
 NSFetchedResultsChangeType enum insert,delete,move,update
+
+Section changes? controller(_:didChange:atSectionIndex:for:) delegate method
+```swift
+func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+    let indexSet = IndexSet(integer: sectionIndex)
+    switch type {
+    case .insert: tableView.insertSections(indexSet, with: .fade)
+    case .delete: tableView.deleteSections(indexSet, with: .fade)
+    case .update, .move:
+        fatalError("Invalid change type in controller(_:didChange:atSectionIndex:for:). Only .insert or .delete should be possible.")
+    }
+}
+```
+
+#### Caching
+
+Kind of automatic and free, multiple fetchedResultsControllers will need multiple caches with unique names.
+```swift
+fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: "myCache")
+```
+
+Delete cache manually - You'll need to do this if you change the fetch request in a FetchedResultsController
+```swift
+NSFetchedResultsController<MyManagedObject>.deleteCache(withName:"myCacheForMyManagedObject")
+```
 
 ### Predicates
 
