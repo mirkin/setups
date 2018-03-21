@@ -16,6 +16,7 @@ Notes on iOS dev. S4 means swift 4
     - [Implicitly unwrapped optionals](#implicitly-unwrapped-optionals)
     - [Optional chaining](#optional-chaining)
   - [Subscripts](#subscripts)
+  - [Functions](#functions)
   - [Generics](#generics)
   - [Auto Layout and StackViews](#auto-layout-and-stackViews)
   - [Saving Data](#saving-data)
@@ -256,8 +257,87 @@ print(p[2])
 print(p[3])
 ```
 
+### Functions
+
+Give arg names and types along with return value as shown.
+
+```swift
+func bingo(bingoText: String, bingoNumber: Int) -> String {
+        return bingoText+" \(bingoNumber)"
+}
+
+print(bingo(bingoText: "legs eleven", bingoNumber:11))
+```
+
+### Parameters
+
+Parameters are constants see [In-Out Parameters](in-out-parameters)
+
+Warning there are 2 names used in arguments. **Argument label** - used when calling the function and **Parameter Name** used in the func. Normally just use parameter name as above and argument labels are assumed to be the same. See below for Argument Labels.
+
+```swift
+func bingoB(sayThis bingoText: String, bingoNumber: Int) -> String {
+    return bingoText+" \(bingoNumber)"
+}
+
+print(bingoB(sayThis: "legs eleven", bingoNumber:11)) // legs eleven 11
+```
+
+No argument label like other languages, no problem use _ before param name
+```swift
+func bingoC(_ bingoText: String, bingoNumber: Int) -> String {
+    return bingoText+" \(bingoNumber)"
+}
+
+print(bingoC("legs eleven", bingoNumber:11)) // legs eleven 11
+```
+
+#### Default Parameter Values
+
+No problem same as other languages, keep required params first defaults last
+```swift
+func bingoD(_ bingoText: String, bingoNumber: Int = 11) -> String {
+    return bingoText+" \(bingoNumber)"
+}
+
+print(bingoD("legs eleven")) // legs eleven 11
+```
+
+#### Variadic Parameters
+Param with 0 or more values of a type. You get that param as an array of that type. Use Type...
+
+```swift
+func arithmeticMean(_ numbers: Double...) -> Double {
+    var total: Double = 0
+    for number in numbers {
+        total += number
+    }
+    return total / Double(numbers.count)
+}
+arithmeticMean(1, 2, 3, 4, 5)
+```
+
+#### In-Out Parameters
+
+
+
+Function overloading is fine, if you don't specify a return value void is assumed which is an empty tuple ().
+
+Multiple return values use tuple as return. Optional tuple is also allowed -> (thingA: String, thingB: String)?
+
+```swift
+func crud() -> (thingA: String, thingB: String)
+{
+    return ("peter","paul")
+}
+
+var x = crud()
+print(x.thingB) // paul
+```
+
 ### Generics
-Array and Dictonary are generics
+
+Array and Dictonary are generics. Why write the same function for different types when you can write just one.
 
 ### Auto Layout and StackViews
 
