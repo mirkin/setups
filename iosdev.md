@@ -22,6 +22,7 @@ Notes on iOS dev. S4 means swift 4
     - [UserDefaults](#userdefaults)
     - [Roll Your Own Files](#roll-your-own-files)
     - [Core Data](#core-data)
+      - [Fetched Results Controller](#fetched-results-controller)
   - [Predicates](#predicates)
   - [](#x)
   - [](#x)
@@ -583,6 +584,8 @@ extension MyManagedObject {
 
 ### Fetched Results Controller
 
+Saves a lot of repeat code you want to use this if you use core data so the UI updates when the data changes.
+
 Sits between views and model, listens for changes to model and triggers logic to update views.
 
 Recap - Every managed object instance is registered to a (managed object) context.
@@ -591,18 +594,117 @@ Whenver a managed object changes or the context is saved Core Data automatically
 
 You could use NotificationCenter to subscribe to core data notifications but more convenient to use FetchedResultsController because they work well with table views and collection views.
 
-Note. FetchedResultsController fetchRequest must be sorted so it has a consistent ordering
+Note. FetchedResultsController fetchRequest must be sorted so it has a consistent ordering. Set up implicitly unwrapped NSFetchedResultsController with your managed object type. Set this up in viewDidLoad or viewWillAppear with a fetchRequest. Tear it down in viewWillDisappear. Set self as it's delegate.
 
-MyViewController.swift
+MyViewController.swift needs to conform to NSFetchedResultsControllerDelegate
 ```swift
-var fetchedResultsController:NSFetchedResultsController<MyManagedObject>!
+class MyViewController: UIViewController, UITableViewDataSource, NSFetchedResultsControllerDelegate {
 
-override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        // tear it down
-        fetchedResultsController = nil
+  var fetchedResultsController:NSFetchedResultsController<MyManagedObject>!
+
+  override func viewDidDisappear(_ animated: Bool) {
+          super.viewDidDisappear(animated)
+          // tear it down
+          fetchedResultsController = nil
+      }
+      
+  override func viewDidLoad() {
+        super.viewDidLoad()
+        setUpFetchedResultsController()
+    }
+    
+  fileprivate func setUpFetchedResultsController() {
+        let fetchRequest:NSFetchRequest<MyManagedObject> = MyManagedObject.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key:"creationDate",ascending:false)
+        fetchRequest.sortDescriptors=[sortDescriptor]
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController.delegate=self
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print("fetchedResultsController could not fetch: \(error.localizedDescription)")
+        }
+    }
+}
+```
+
+You use an Array as a data source to your TableView often when hacking. Use a fetchedResultsController instead.  
+
+FetchedResultsController can have multliple sections fetchedResultsController.sections?.count for how many. Each section is of type SectionInfo fetchedResultsController.sections?[section].numberOfObjects fetchedResultsController.object(at: indexPath)
+
+So remove your array if you were using it and do it the fetchedResultsController way!
+
+```swift
+func numberOfSections(in tableView: UITableView) -> Int {
+        return fetchedResultsController.sections?.count ?? 1
+    }
+    
+func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
+    }
+    
+func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let myObject = fetchedResultsController.object(at: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: MyCell.defaultReuseIdentifier, for: indexPath) as! MyCell
+
+        // Configure cell
+        cell.nameLabel.text = myObject.name
+        return cell
+    }
+    
+override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? SubViewController {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                vc.myManagedObject = fetchedResultsController.object(at: indexPath)
+            }
+            //
+            vc.dataController=self.dataController
+        }
+    }
+    
+    func addThing(name: String) {
+        let myManagedObject = ManagedObject(context: dataController.viewContext)
+        myManagedObject.name = name
+        myManagedObject.creationDate = Date()
+        try? dataController.viewContext.save()
+    }
+    
+    func deleteThing(at indexPath: IndexPath) {
+        let myManagedObjectToDelete = fetchedResultsController.object(at: indexPath)
+        dataController.viewContext.delete(myManagedObjectToDelete)
+        try? dataController.viewContext.save()
     }
 ```
+
+Organise into an extension
+
+```swift
+extension MyViewController:NSFetchedResultsControllerDelegate {
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+        default:
+            break
+        }
+    }
+}
+```
+
+NSFetchedResultsChangeType enum insert,delete,move,update
 
 ### Predicates
 
