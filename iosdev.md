@@ -327,6 +327,8 @@ arithmeticMean(1, 2, 3, 4, 5)
 #### In-Out Parameters
 
 For a parameter that needs to change, it must be a variable can't be literal or constant obviously. No default values allowed.
+Pass & before variable name.
+
 ```swift
 func swapTwoInts(_ a: inout Int, _ b: inout Int) {
     let temporaryA = a
@@ -392,11 +394,43 @@ let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
 #### Nested Functions
 No problem you can do this.
 
+### Collections
+
+### Dictionary
+
+Similar to other languages hashtable, dictionary, etc. unordered key value pairs. Key type must conform to Hashtable protocol and the type of Key and Value is fixed for each dictionary.
+
+Dictionary<Key, Value> shorthand [Key: Value]
+
+```swift
+//Shorthand
+var bingoNumbers = [Int: String]()
+bingoNumbers[11] = "Leg Eleven"
+//Longhand
+var bingoNumbersB: Dictionary<Int, String> = Dictionary<Int, String>()
+bingoNumbersB[11] = "Leg Eleven"
+// [:] create empyt dictionary if context already provides type
+var bingoNumbersC: Dictionary<Int, String> = [:]
+bingoNumbersC[11] = "Leg Eleven"
+//
+var bingoNumbersD = [11:"Legs Eleven", 22: "Two Little Ducks"]
+print("bingoNumbersD has \(bingoNumbersD.count) items")
+// "bingoNumbersD has 2 items\n"
+```
+
+.count and .isEmpty
 
 
 ### Generics
 
-Array and Dictonary are generics. Why write the same function for different types when you can write just one.
+**Generic Functions** that take any (generic) type. Why write the same function for different types when you can write just one. 
+
+Also **Generic Types** classes, structures, enums that can work with any type.
+
+Array , Optionals, and Dictonary are generic types.
+
+Convention to use single letter T instead of a type, if more use U, V or an upper camel case meaningful word.
+
 
 ### Auto Layout and StackViews
 
