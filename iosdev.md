@@ -399,7 +399,7 @@ No problem you can do this.
 
 ### Collections
 
-#### Array
+### Array
 
 ### Dictionary
 
@@ -418,7 +418,7 @@ bingoNumbersB[11] = "Legs Eleven"
 var bingoNumbersC: Dictionary<Int, String> = [:]
 bingoNumbersC[11] = "Legs Eleven"
 //
-var bingoNumbersD = [11:"Legs Eleven", 22: "Two Little Ducks"]
+var bingoNumbersD = [11:"Legs Eleven", 22: "Two Little Ducks", 8: "Garden Gate"]
 print("bingoNumbersD has \(bingoNumbersD.count) items")
 // "bingoNumbersD has 2 items\n"
 bingoNumbersD[11]=nil
@@ -433,11 +433,26 @@ if let removedValue = bingoNumbersD.removeValue(forKey: 11) {
 if let oldValue = bingoNumbersD.updateValue("Two and Two", forKey: 22) {
     print("old was \(oldValue).")
 }
+//iterate Dictionary
+for (k, v) in bingoNumbersD {
+    print ("\(k) -> \(v)")
+}
+//iterate Dictionary keys
+for k in bingoNumbersD.keys {
+    print ("\(k)")
+}
+//iterate Dictionary values
+for v in bingoNumbersD.values {
+    print ("\(v)")
+}
+// put keys or values into new array
+let keys = [Int](bingoNumbersD.keys)
+let values = [String](bingoNumbersD.values)
 ```
 
 .count and .isEmpty remove value py putting in nil (quick) or removedValue (returns the old value as optional of that type) access and set values by subscript [] (quick) or updateValue (returns old value as optional of that type).
 
-
+Iterate for (key, value) in, .keys .values gives iterable collection which you can build a new array from or do a .sorted() on.
 
 
 ### Generics
