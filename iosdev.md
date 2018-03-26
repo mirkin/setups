@@ -23,6 +23,9 @@ Notes on iOS dev. S4 means swift 4
       - [In-Out Parameters](#in-out-parameters)
       - [](#)
       - [](#)
+  - [Collections](#collections)
+    - [Array](#array)
+    - [Dictionary](#dictionary)
   - [Generics](#generics)
   - [Auto Layout and StackViews](#auto-layout-and-stackViews)
   - [Saving Data](#saving-data)
@@ -396,6 +399,8 @@ No problem you can do this.
 
 ### Collections
 
+#### Array
+
 ### Dictionary
 
 Similar to other languages hashtable, dictionary, etc. unordered key value pairs. Key type must conform to Hashtable protocol and the type of Key and Value is fixed for each dictionary.
@@ -405,20 +410,34 @@ Dictionary<Key, Value> shorthand [Key: Value]
 ```swift
 //Shorthand
 var bingoNumbers = [Int: String]()
-bingoNumbers[11] = "Leg Eleven"
+bingoNumbers[11] = "Legs Eleven"
 //Longhand
 var bingoNumbersB: Dictionary<Int, String> = Dictionary<Int, String>()
-bingoNumbersB[11] = "Leg Eleven"
+bingoNumbersB[11] = "Legs Eleven"
 // [:] create empyt dictionary if context already provides type
 var bingoNumbersC: Dictionary<Int, String> = [:]
-bingoNumbersC[11] = "Leg Eleven"
+bingoNumbersC[11] = "Legs Eleven"
 //
 var bingoNumbersD = [11:"Legs Eleven", 22: "Two Little Ducks"]
 print("bingoNumbersD has \(bingoNumbersD.count) items")
 // "bingoNumbersD has 2 items\n"
+bingoNumbersD[11]=nil
+// removed value
+bingoNumbersD[11] = "Legs Eleven"
+if let removedValue = bingoNumbersD.removeValue(forKey: 11) {
+    print("just removed \(removedValue).")
+} else {
+    print("nothing there for 11.")
+}
+// alternative to bingoNumbersD[22]="Two and Two"
+if let oldValue = bingoNumbersD.updateValue("Two and Two", forKey: 22) {
+    print("old was \(oldValue).")
+}
 ```
 
-.count and .isEmpty
+.count and .isEmpty remove value py putting in nil (quick) or removedValue (returns the old value as optional of that type) access and set values by subscript [] (quick) or updateValue (returns old value as optional of that type).
+
+
 
 
 ### Generics
