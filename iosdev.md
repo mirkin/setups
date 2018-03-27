@@ -9,6 +9,7 @@ Notes on iOS dev. S4 means swift 4
   - [](#x)
   - [Pods](#pods)
 - [Swift Language](#swift-language)
+  - [Struct vs Class](#struct-vs-class)
   - [Access Levels](#access-levels)
   - [Extensions](#extensions)
   - [Let and Var](#let-and-var)
@@ -94,9 +95,9 @@ You can pass and share between views using prepare(for seque:) in your view cont
 
 **Dependency Injection** or **Singleton** Singleton avoids possibility of creating multiple instances and I've used it non stop in other languages. Unit testing can be easier with Dependency Injection. 
 
-### Stuct vs Class
+### Struct vs Class
 
-Structures are value types, properties are copied when passed around Classes are reference types.
+**Structures** are value types, properties are copied when passed around. **Classes** are reference types.
 
 ### Access Levels
 S4
