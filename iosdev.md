@@ -604,6 +604,10 @@ Add and rename your entities in the visual editor graph view (schema) and table 
 Entities are like tables attibutes like fields/columns  
 You can set default values  
 
+With **Binary Data Type** you can select 'Allows External Storage' so it will store the binary data as a file and keep a reference to it in DB. Becomes NSData you are responsible for turning that back to whatever it was. Lots of foundation types can be stored as binary data. Any type that conforms to **NSCoding protocol** will work.
+
+With **Transformable** it's like Binary Data but will do the work for you and create correctly typed property. Not tick for 'Allows External Storage' though. Just type in the class under Custom Class.
+
 CodeGen -> Class Definition automatically creates the code, the files are deep in derived data and you shouldn't manually edit them but you can take a peek to see how it all works. So what do we do if we can't mess with this file? *Extension*
 
 Create new file MyModel+Extra.swift
@@ -947,6 +951,44 @@ Delete cache manually - You'll need to do this if you change the fetch request i
 ```swift
 NSFetchedResultsController<MyManagedObject>.deleteCache(withName:"myCacheForMyManagedObject")
 ```
+
+#### Migration
+
+Check up to date documentation but here are some basics.
+
+Change your model and the managed object model will be different from the one stored in persistent store container which is an unholy mess. Any changes to data model will invalidate everything, in development you can just delete the app but in the field with users having your old data format you need to migrate.
+
+**Version your data model** select your data model in XCode in editor 'Add Model Version'. You can see the versions in the project navigator little green tick for the one being used. You can change this in file inspector under Model Version.
+
+Migrations can be Automatic (lightweight) or Manual (Custom). Automatic is default and it will do it's best to infer mapping of entities, attributes, and relationships to the new model. Manual you suppy mapping file explaining how to map from one version to another. You can make and array of mapping files to convert data in batches.
+
+Manual - New file 'Mapping Model' (in core data section) select source and destination data model .xcdatamodel and name the mapping file something descriptive.
+
+You can work with the visual editor and also write policy files. Create a subclass of NSEntityMigrationPolicy override createDestinationInstances 
+
+```swift
+import UIKit
+import CoreData
+
+class MyMigrationForWhatver: NSEntityMigrationPolicy {
+
+    override func createDestinationInstances(forSource sInstance: NSManagedObject, in mapping: NSEntityMapping, manager: NSMigrationManager) throws {
+        // Call super
+        try super.createDestinationInstances(forSource: sInstance, in: mapping, manager: manager)
+
+        // Get the (updated) destination entity instance we're modifying
+        guard let destination = manager.destinationInstances(forEntityMappingName: mapping.name, sourceInstances: [sInstance]).first else { return }
+
+        // Use the (original) source entity instance, and instantiate a new
+        // NSAttributedString using the original string
+        if let myField = sInstance.value(forKey: "myOldField") as? String {
+            destination.setValue(WhateverNewClass(string: text), forKey: "myNewField")
+        }
+    }
+}
+```
+
+Then reference that class with namespace in Custom Policy in Entity Mapping.
 
 ### Predicates
 
