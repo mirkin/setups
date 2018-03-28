@@ -974,6 +974,90 @@ Parent can be a persistent store coordinator you have as a parent for multiple c
 
 For concurrency a good choice is to have a main context and a background context connected to same PersistentStoreCoordinator.
 
+NSPersistentContainer.newBackgroundContext() will create a background context that you can use repeatedly.
+
+NSPersistentContainer.performBackgroundTask with a closure {do stuff then context.save()} will create a temporary backgroundContext which can perform better than a long lived newBackgroundContext()
+
+ViewContext.perform {} will do something async on correct queue for that context.
+ViewContext.performAnd Wait {} will do something sync on correct queue for that context. 
+
+UI not thread safe so don't do any UI stuff in there, even read only stuff.
+
+Don't do viewContext stuff in there either. Say you have a managedObject instance associated with a viewContext you can't use that in the background. You need another instance of it, every managed object has an ID consistent over contexts. So store myManagedObject.objectID and use that to get another instance in the backgroundContext.object(with:theID)
+
+DataController.swift
+```swift
+class DataController
+{
+    let persistentContainer:NSPersistentContainer
+  
+    var viewContext:NSManagedObjectContext {
+        return persistentContainer.viewContext
+    }
+    
+    var backgroundContext:NSManagedObjectContext!
+    
+    init(modelName:String){
+        persistentContainer=NSPersistentContainer(name:modelName)
+    }
+    
+    func configureContexts() {
+        backgroundContext = persistentContainer.newBackgroundContext()
+        
+        viewContext.automaticallyMergesChangesFromParent = true
+        backgroundContext.automaticallyMergesChangesFromParent = true
+        
+        backgroundContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+        viewContext.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
+    }
+   
+    func load(completion:(()->Void)?=nil){
+        persistentContainer.loadPersistentStores { storeDescription, error in
+            guard error == nil else {
+                fatalError(error!.localizedDescription)
+            }
+            self.autoSaveViewContext()
+            self.configureContexts()
+            completion?()
+        }
+    }
+}
+
+```
+
+YourViewController.swift
+```swift
+  let backgroundContext:NSManagedObjectContext! = dataController.backgroundContext
+
+  let backgroundManagedObjectID = managedObject.objectID
+
+  backgroundContext.perform {
+      let backgroundManagedObject = backgroundContext.object(with: noteID) as! MyManagedObject
+      
+      //delay to test concurrency code replace with doing stuff
+      sleep(5)
+
+      backgroundManagedObject.attribute = newValue
+      try? backgroundContext.save()
+  }
+```
+
+Always wrap context's tasks in a perform call.
+
+Wrong queue bug is hard to find may or may not crash the app. Add this to crash everytime you use the wrong queue
+
+Product>Scheme>Edit Scheme>Run Debug>Arg passed on launch> add -com.apple.CoreData.ConcurrencyDebug 1
+
+(change 1 to 2 or 3 for more verbose output)
+
+Merge Conflicts can cause issues so we need a merge policy to handle merge conflicts. Context has merge policy property of type NSMergePolicy defaults to errorMergePolicyType which is why it will crash.
+
+PropertyStoreTrump - property changes from peristentStore trump prop changes in the context.
+PropertyObjectTrump - state of property in context trumps state in store.
+
+MergeByPropertyStoreTrump - 
+MergeByPropertyObjectTrump -
+
 #### Migration
 
 Check up to date documentation but here are some basics.
