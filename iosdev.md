@@ -65,6 +65,10 @@ Little hack to auto reformat code
 
 Select All, CopyCut, Paste
 
+#### Lag
+
+sleep(15) in your code to emulate a delay and see how your app copes.
+
 ## Swift Language
 
 ### 
@@ -951,6 +955,20 @@ Delete cache manually - You'll need to do this if you change the fetch request i
 ```swift
 NSFetchedResultsController<MyManagedObject>.deleteCache(withName:"myCacheForMyManagedObject")
 ```
+
+#### Concurrency
+
+Each ManagedObjectContext is associated with a specific queue, ViewContext is associated with the main queue. 
+
+Users are very sensitive to lag especially when it's something they've not initiated. 
+
+You can have multiple ViewContexts connected to the same PersistentStoreCoordinator. In this setup the ViewContexts have seperate versions of the managedObjects they contain. Changes in one aren't reflected in the other. You can listen for change notifications in one context and merge those changes into the other context if we want full control.
+
+We can set this up to happen automatically viewContext.automaticallyMergeChangesFromParent = true
+
+Parent can be a persistent store coordinator you have as a parent for multiple contexts or you can set up child context from a parent context. 
+
+For concurrency a good choice is to have a main context and a background context connected to same PersistentStoreCoordinator.
 
 #### Migration
 
