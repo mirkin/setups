@@ -36,6 +36,7 @@ Notes on iOS dev. S4 means swift 4
     - [Core Data](#core-data)
       - [Core Data Stack](#core-data-stack)
       - [Fetched Results Controller](#fetched-results-controller)
+      - [Notification Center](#notification-center)
       - [Caching](#caching)
       - [Concurrency](#concurrency)
       - [Migration](#migration)
@@ -945,6 +946,56 @@ func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, 
     case .update, .move:
         fatalError("Invalid change type in controller(_:didChange:atSectionIndex:for:). Only .insert or .delete should be possible.")
     }
+}
+```
+
+#### Notification Center
+
+Use notification center to find out about changes and update UI
+
+```swift
+class MyViewController: UIViewController {
+  
+  var myManagedObject: MyManagedObject!
+  var dataController:DataController!
+  var saveObserverToken: Any?
+  
+  override func viewDidLoad() {
+        super.viewDidLoad()
+        addSaveNotificationObserver()
+    }
+    
+    deinit {
+        removeSaveNotificationObserver()
+    }
+
+}
+
+
+extension MyViewController {
+    func addSaveNotificationObserver() {
+        removeSaveNotificationObserver()
+        saveObserverToken = NotificationCenter.default.addObserver(forName: .NSManagedObjectContextObjectsDidChange, object: dataController.viewContext, queue: nil, using: handleSaveNotification(notification:))
+    }
+    
+    func removeSaveNotificationObserver() {
+        if let token = saveObserverToken {
+            NotificationCenter.default.removeObserver(token)
+        }
+    }
+    
+    fileprivate func reloadUI() {
+        myUIElement.whatever = myManagedObject.whatever
+    }
+    
+    func handleSaveNotification(notification:Notification) {
+        //dump info about what changed use this to only update UI that needs it
+        dump(notification.userInfo)
+        DispatchQueue.main.async {
+            self.reloadUI()
+        }
+    }
+    
 }
 ```
 
