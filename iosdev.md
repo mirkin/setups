@@ -639,10 +639,10 @@ Relationship-> obvious 1 to many etc.
 
 * Managed Object Context(s) - ManagedObjectContext instances scratchpad to create and manipulate when we are done we can roll back or save to permanent store. Changes made while in the context are not saved to disk or update UI. You never instantiate a managed object directly (let Thing=Thing()) you associate with a context (Thing(context:))
 * Managed Object Model - Describes attributes and repationships usually defined in data model editor in xcode .xcdatamodeld compiled into a .momd
-* Persistant Store Coordinator - Connects to 1 or more persistent stores and used model and context. It talks to SQL etc. so it's abstracted away from the dev.
+* Persistant Store Coordinator - Connects to 1 or more persistent stores and uses model and context. It talks to SQL etc. so it's abstracted away from the dev.
 * Persistent Container - Introduced iOS10 to reduce boildplate to set up stack. Helps set up stack and has methods and vars to work with contexts
 
-Write this little utility to help make things easier and share it to your viewcontroller.
+Write this little utility to help make things easier and share it to your viewcontroller. It will be expanded on later in my notes.
 
 DataController.swift
 ```swift
