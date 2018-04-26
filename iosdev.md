@@ -594,6 +594,8 @@ String to read/write text files Data to read/write binary files
 
 ### Core Data
 
+Realm may be an alternative but your are at their ransom if they stop developing or have bugs. Bad old days using Adobe Air and not able to publish.
+
 Useful links
 [https://github.com/objcio/core-data](https://github.com/objcio/core-data)
 
