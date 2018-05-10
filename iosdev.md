@@ -1253,3 +1253,10 @@ pod install
 Now must always open the project with the .xcworkspace file and not the .xcodeproj.
 
 Now you can import Alamofire in your swift code.
+
+If it gets messed up 
+```
+pod deintegrate
+pod update
+```
+
