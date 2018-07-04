@@ -1199,6 +1199,11 @@ let result7 = (people as NSArray).filtered(using: predicate7) // Tray
 let result8 = (people as NSArray).filtered(using: compoundPredicate) // Tray
 ```
 
+### Debug Autolayout
+
+breakpoint UIViewAlertForUnsatisfiableConstraints
+po [[UIWindow keyWindow] _autolayoutTrace] 
+
 ### Pods
 
 #### Install
