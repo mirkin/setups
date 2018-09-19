@@ -5,6 +5,7 @@ Notes on iOS dev. S4 means swift 4
 ## Table of contents
 
 - [About](#about)
+- [Simulator](#simulator)
 - [XCode IDE](#xcode-ide)
   - [](#x)
   - [Pods](#pods)
@@ -45,6 +46,79 @@ Notes on iOS dev. S4 means swift 4
   - [](#x)
   - [](#x)
   - [](#x)
+  
+## Simulator
+
+Help
+```
+xcrun simctl help
+```
+
+List available sims any running will show as booted
+```
+xcrun simctl list
+```
+
+Create/Boot/Shutdown/Erase simulator 
+pass create the new name and then device type and runtime which you can get from xcrun simctl list
+```
+xcrun simctl create MYDEVICE com.apple.CoreSimulator.SimDeviceType.iPhone-7 com.apple.CoreSimulator.SimRuntime.iOS-11-4
+37FB3D7B-1350-42AF-A039-738C1186FB76
+xcrun simctl boot 37FB3D7B-1350-42AF-A039-738C1186FB76
+xcrun simctl shutdown 37FB3D7B-1350-42AF-A039-738C1186FB76
+xcrun simctl erase 37FB3D7B-1350-42AF-A039-738C1186FB76
+```
+
+Simulator app must be running to see the device window
+```
+open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/
+```
+
+Install/Uninstall/Launch/Terminate App
+To uninstall you use the bundle identifier not the app file name
+Also Debug-iphoneos directory didn't work Debug-iphonesimulator did work but the icon
+was missing.
+```
+xcrun simctl install booted /Users/alex/Library/Developer/Xcode/DerivedData/APPNAME-ccavkoifbprloefgguklopkvbpzj/Build/Products/Debug-iphoneos/APPNAME.app
+
+xcrun simctl install 37FB3D7B-1350-42AF-A039-738C1186FB76 /Users/alex/Library/Developer/Xcode/DerivedData/APPNAME-ccavkoifbprloefgguklopkvbpzj/Build/Products/Debug-iphoneos/APPNAME.app
+
+xcrun simctl install booted /Users/alex/Library/Developer/Xcode/DerivedData/APPNAME-ccavkoifbprloefgguklopkvbpzj/Build/Products/Debug-iphonesimulator/APPNAME.app
+
+xcrun simctl uninstall booted com.gurgleaps.MPT
+
+xcrun simctl launch booted com.gurgleaps.MPT
+xcrun simctl launch --console booted com.gurgleaps.MPT
+xcrun simctl terminate booted com.gurgleaps.MPT
+```
+
+Screenshot or video
+```
+xcrun simctl io booted screenshot screen.png
+xcrun simctl io booted recordVideo app-preview.mov
+xcrun simctl io booted recordVideo --type=mp4 <PATH TO VIDEO FILE>
+```
+
+Get info with bundle ID
+```
+xcrun simctl appinfo booted com.gurgleaps.MPT
+```
+
+Logs
+```
+xcrun simctl spawn booted log stream -level=debug
+xcrun simctl spawn booted log collect
+```
+
+Open a URL
+```
+xcrun simctl openurl booted <URL>
+```
+
+Add Photo/Video
+```
+xcrun simctl addmedia booted /path/to/photo.png
+```
   
 ## XCode IDE
 
