@@ -168,6 +168,13 @@ Use preferences/navigation/uses focused navigator rather than primary so files o
 
 Use // MARK:
 
+#### Debug
+
+po varaiable - print out variable   
+p variable - print variable try both versions  
+
+On a breakpoint you can continue running or step over line by line. Step over if a line is a method call will treat it as one line so you may want to use step into. This will go into that method and you can go over that line by line.
+
 #### Lag
 
 sleep(15) in your code to emulate a delay and see how your app copes.
