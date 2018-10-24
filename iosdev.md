@@ -144,6 +144,21 @@ Little hack to auto reformat code
 
 Select All, CopyCut, Paste
 
+#### Shortcuts
+
+cmd r - run
+
+Use these toggles like blender to fly around.
+
+Left Pane (Navigator) cmd 0
+Right Pane (Utilities) cmd alt 0
+Console and Debugger cmd shift y
+Assistant Editor cmd alt enter / cmd enter show/hide
+
+If left pane open cmd 1,2,3,4,5,6 etc switches around tabbing sections
+for right pane its cmd alt 1,2,3,4 etc
+
+
 #### Lag
 
 sleep(15) in your code to emulate a delay and see how your app copes.
