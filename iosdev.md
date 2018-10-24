@@ -156,8 +156,17 @@ Console and Debugger cmd shift y
 Assistant Editor cmd alt enter / cmd enter show/hide  
 
 If left pane open cmd 1,2,3,4,5,6 etc switches around tabbing sections  
-for right pane its cmd alt 1,2,3,4 etc  
+for right pane its cmd alt 1,2,3,4 etc 
 
+cmd shift o - open (opens a file in navigator just start typing filename)  
+cmd / - comment out . 
+ctrl i - audo indent code awesome!!!  
+
+Use preferences/navigation/uses focused navigator rather than primary so files open in the window you want.
+
+#### Editor
+
+Use // MARK:
 
 #### Lag
 
