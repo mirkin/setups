@@ -150,13 +150,13 @@ cmd r - run
 
 Use these toggles like blender to fly around.
 
-Left Pane (Navigator) cmd 0
-Right Pane (Utilities) cmd alt 0
-Console and Debugger cmd shift y
-Assistant Editor cmd alt enter / cmd enter show/hide
+Left Pane (Navigator) cmd 0 
+Right Pane (Utilities) cmd alt 0 
+Console and Debugger cmd shift y 
+Assistant Editor cmd alt enter / cmd enter show/hide 
 
-If left pane open cmd 1,2,3,4,5,6 etc switches around tabbing sections
-for right pane its cmd alt 1,2,3,4 etc
+If left pane open cmd 1,2,3,4,5,6 etc switches around tabbing sections 
+for right pane its cmd alt 1,2,3,4 etc 
 
 
 #### Lag
