@@ -25,6 +25,7 @@ Notes on iOS dev. S4 means swift 4
       - [In-Out Parameters](#in-out-parameters)
       - [](#)
       - [](#)
+  - [Closures](#closures)
   - [Collections](#collections)
     - [Array](#array)
     - [Dictionary](#dictionary)
@@ -515,6 +516,51 @@ let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
 
 #### Nested Functions
 No problem you can do this.
+
+#### Closures
+
+Similar in nature to other languages, used for callbacks or repeats and capture the surrounding variables. They are reference types and can go in Arrays, Dictionarys etc. So careful with memory reference cycles.!!!
+
+```swift
+// regular swift function
+func changeSign(operand: Double) -> Double { return -operand }
+// closure syntax move first { to start and replace with in
+var closure = { (operand: Double) -> Double in return -operand }
+// can infer return type in this case so no need for -> Double
+var closure: (Double) -> Double
+closure = { (operand: Double) in return -operand }
+// actually also knows operand is double so can remove that
+closure = { (operand) in return -operand }
+// it knows it returns a value so we can skip the return keyword
+closure = { (operand) in -operand }
+// you don't need argument names just use $0 for first $1,$2,$3 etc. for 2nd etc.
+// no argument names so don't need the 'in' any more either
+closure = { -$0 }
+```
+
+If the last or only argument to a method is a closure, you can put it outside the method's parentheses that contain it's arguments and if the closure was the only argument you can skip () completely. Best way to show this is Array.map example below.
+
+Array has method map which takes a function as an argument, applies the function to each
+element of the array to create and return new array.
+
+```swift
+let primes = [2.0, 3.0, 5.0, 7.0, 11.0]
+// notice difference in trailing closure syntax below we pass in () like normal
+let negativePrimes = primes.map({ -$0 }) // [-2.0, -3.0, -5.0, -7.0, -11.0]
+// or put outside
+let invertedPrimes = primes.map() { 1.0/$0 } // [0.5, 0.333, 0.2, etc.]
+// or put outside and skip the () becasue it's the only argument and it's a closure
+let primeStrings = primes.map { String($0) } // [-2.0, -3.0, -5.0, -7.0, -11.0]
+```
+
+Execute Closure right away with property initialization - notice the () at end of closure. You can do this to a lazy var and it won't be initialized until someone asks for it.
+
+```swift
+var myVar: Type = {
+  // do stuff
+  return <the value>
+}()
+```
 
 ### Collections
 
