@@ -562,6 +562,25 @@ var myVar: Type = {
 }()
 ```
 
+#### Errors
+
+Throw & Catch a little like exceptions. You have to 'try' but don't have to catch (try! try?). Error protocol is actually empty usually it will be an NSError 
+
+```swift
+func save() throws // use throws keyword in function definition
+//
+do {
+      try context.save()
+} catch let error {
+  // error implements Error protocol usually enums
+  throw error // rethrow error, this function must have throws keyword in definition
+}
+//
+try! context.save() // use try! no catch only do this if you are certain there can't be an error or your program will crash
+// use try? it will not crash if there is an error but will convert return type into optional in this case an Int?
+let x = try? funcThatReturnsInt()
+```
+
 ### Collections
 
 ### Array
