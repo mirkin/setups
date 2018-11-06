@@ -214,6 +214,42 @@ You can pass and share between views using prepare(for seque:) in your view cont
 
 **Structures** are value types, properties are copied when passed around. **Classes** are reference types.
 
+### NSObject
+
+Base class of all Objective-C classes, some advanced features require you subclass from NSObject
+
+### NSNumber
+
+Objective C number, bridged to swift. Can take any number type even boolean .doubleValue .boolValue etc. Create with NSnumber(23)
+
+### Data
+
+Bag of bits, struct to hold data and loads of goodies to get jpeg or json or whatever it is out of it.
+
+### Any and AnyObject
+
+Any and AnyObject used for compatibility with obective c. Don't use in your own code but you need to know how to handle them if any API uses them. Convert using as? if conversion isn't possible you get nil. Can also check using 'is' keyword true/false.
+
+```swift
+let thing: Any = ....
+if let typedThing = thing as? MyType {
+  typedThing.method()
+}
+```
+
+### Casting
+
+Use as? to cast
+
+```swift
+// legal to downcast if MyViewController inherits from UIViewController but we can't run MyViewController type methods on it.
+let vc: UIViewContoller = MyViewController()
+vc.customMethod() // nope because type is UIViewController not MyViewController even though it really is MyViewController
+if let cvc = vc as? MyViewController {
+  cvc.customMethod() // all good in the hood
+}
+```
+
 ### Access Levels
 S4
 5 levels 
