@@ -685,6 +685,21 @@ Array , Optionals, and Dictonary are generic types.
 
 Convention to use single letter T instead of a type, if more use U, V or an upper camel case meaningful word.
 
+### UIView
+
+Hierarchical rectangular area with coords for drawing and touch events. Root of all is your UIViewController's var view: UIView.  
+
+var superview: UIView?  
+var subviews: [UIView]  
+Order matters subview later in array on top of earlier. View can clip subviews to it'a bounds (default is not)
+
+UIWindow top of view hierarchy includes statusbar only one per app.
+
+addSubview(_ view:UIView) and removeFromSuperview() to add and remove in code.
+
+init(frame: CGRect) if UIView created in code, init(coder: NSCoder) from storyboard
+
+Alternative to initializers awakeFromNib() is called on all objects that inherit from NSObject in a storyboard. It's done right after initialization is complete.
 
 ### Auto Layout and StackViews
 
