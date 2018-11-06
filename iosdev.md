@@ -33,6 +33,9 @@ Notes on iOS dev. S4 means swift 4
     - [Dictionary](#dictionary)
   - [Generics](#generics)
   - [Views](#uiview)
+      - [Drawing](#drawing)
+        - [Draw Text](#draw-text)
+      - [Colours](#colours)
   - [Auto Layout and StackViews](#auto-layout-and-stackViews)
   - [Saving Data](#saving-data)
     - [File Structure](#file-structure)
@@ -714,6 +717,21 @@ let tinyView = UIView() // frame will be CGRect.zero
 //
 var isHidden: Bool // like visible in flash not seen and gets no events
 ```
+
+When your **bounds change** like orientation change you are not redrawn by default. Bad Times!! So set
+```swift
+var contentMode: UIViewContentMode
+```
+Don't scale just move the bits    
+.left, .right, .bottom, .topRight, .topLeft, .bottomLeft, .bottomRight, .center
+Scale    
+.scaleToFill, .scaleAspectFill, .scaleAspectFit
+Redraw whole view    
+.redraw
+
+**Subview layout on bounds change**
+
+We want to reposition subviews, can do with constraints or manualls by overriding layoutSubviews()
 
 ### Drawing
 
