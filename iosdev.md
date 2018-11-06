@@ -690,7 +690,7 @@ Convention to use single letter T instead of a type, if more use U, V or an uppe
 
 ### UIView
 
-Hierarchical rectangular area with coords for drawing and touch events. Root of all is your UIViewController's var view: UIView.  
+Hierarchical rectangular area with coords for drawing and touch events. Root of all is your UIViewController's var view: UIView. Origin upper left.
 
 var superview: UIView?  
 var subviews: [UIView]  
@@ -703,6 +703,76 @@ addSubview(_ view:UIView) and removeFromSuperview() to add and remove in code.
 init(frame: CGRect) if UIView created in code, init(coder: NSCoder) from storyboard
 
 Alternative to initializers awakeFromNib() is called on all objects that inherit from NSObject in a storyboard. It's done right after initialization is complete.
+```swift
+var contentScaleFactor: CGFloat //pixels per point
+var bounds:CGrect //internal origin and size bounds.origin interpretation depends on view sometimes meaningless
+var center: CGPoint // center in superview coord system
+var frame: CGRect // rect containing this UIView in superview coord system
+// create new in code
+let newView = UIView(frame: myFrame)
+let tinyView = UIView() // frame will be CGRect.zero
+//
+var isHidden: Bool // like visible in flash not seen and gets no events
+```
+
+### Drawing
+
+CGFloat not floats and doubles for coords. CGPoint x & y, CGSize width & height, CGRect origin & size
+
+Units are points not pixels could be 1,2,3 or whatever pixels per point.
+
+CGRect really useful minX left edge, midY vertical middle, intersects(CGRect)->Bool, contains(CGPoint) -> Bool and loads of others.
+
+Origin upper left. center and frame is your center and frame in superview coord nothing to do with drawing. You need bounds for your drawing. If you are rotated your frame will not be same as bounds
+
+To draw override draw(_ rect:CGRect), rect arg as expected optimisation so only part of screen that needs updating. I usually update based on bounds though.
+
+Never call draw(CGrect) use setNeedsDisplay() or setNeedsDisplay(_ rect: CGRect)
+
+```swift
+override func draw(_ rect:CGRect)
+```
+
+You can draw via a drawing context or you can use UIBezierPath and do it in a OO way. I've used both, usually UIBezierPath. Get context using UIGraphicsGetCurrentContext() for live drawing although you can get context to offscreen buffers and the like.
+
+Create paths from lines, moveTo, arcs using context. Set attributes like colour, linewidths, etc. then stroke it or fill it.
+
+```swift
+let path = UIBezierPath()
+path.move(to: CGPoint(80,50))
+path.addLine(to: CGPoint(140,150))
+path.addLine(to: CGPoint(10,150))
+path.close()
+UIColor.green.setFill()
+UIColor.red.setStroke()
+path.linewidth = 3.0
+path.fill()
+path.stroke()
+//
+//common shapes check API for more
+let roundRect = UIBezierPath(roundedRect: CGRect, cornerRadius: CGFloat)
+let oval = UIBezierPath(ovalIn: CGRect)
+// !!!!! CLIPPING
+addClip() // clips drawing to bezier path like rounded edges of playing card
+// !!! Hit detection (path must be closed)
+func contains(_ point: CGPoint) -> Bool // winding rule / nonzero rule usesEvenOddFillRule
+```
+
+#### Draw Text
+
+Use UILabel or draw text in draw(CGRect)
+```swift
+let text = NSAttributedString(string: "bob") // set attributes
+text.draw(at: myCGPoint) // or draw(in: CGRect)
+let textSize: CGSize = text.size // space it takes up
+```
+
+### Colours
+
+Alpha ignored for performance unless UIView Var opaque set to true. Entire view has alpha value also.
+Can create from RGB, HSB, or even pattern contained in UIImage.   
+UIColour.green.withAlphaComponent(0.5)   
+
 
 ### Auto Layout and StackViews
 
