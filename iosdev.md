@@ -802,6 +802,14 @@ Redraw whole view
 
 We want to reposition subviews, can do with constraints or manualls by overriding layoutSubviews()
 
+Handy to do a didSet on any vars that need a redraw or layout subviews.
+
+```swift
+class MyUIView: UIView {
+  var varWhichNeedsLayoutAndRedraw: Int = 23 { didSet { setNeedsDisplay(); setNeedsLayout() }}
+}
+```
+
 ### Drawing
 
 CGFloat not floats and doubles for coords. CGPoint x & y, CGSize width & height, CGRect origin & size
