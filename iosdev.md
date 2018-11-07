@@ -37,6 +37,7 @@ Notes on iOS dev. S4 means swift 4
       - [Drawing](#drawing)
         - [Draw Text](#draw-text)
       - [Colours](#colours)
+  - [UILabel](#uilabel)
   - [Auto Layout and StackViews](#auto-layout-and-stackViews)
   - [Saving Data](#saving-data)
     - [File Structure](#file-structure)
@@ -353,6 +354,13 @@ Often used to break the implementation of types up into logical components.
 ### let and var
 let immutable like a constant  
 var mutable 
+
+**Lazy Var**
+
+If you want to initialise a variable using a function catch22 chicken egg so use lazy
+```swift
+private lazy var myRadius = calculateRadius()
+```
 
 ### Optionals
 
@@ -801,6 +809,12 @@ Redraw whole view
 **Subview layout on bounds change**
 
 We want to reposition subviews, can do with constraints or manualls by overriding layoutSubviews()
+```swift
+override func layoutSubviews() {
+  super.layoutSubviews() // don't forget this so Autolayout can do it's magic
+  // reposition your subviews if you aren't using autolayout on them
+}
+```
 
 Handy to do a didSet on any vars that need a redraw or layout subviews.
 
@@ -882,6 +896,15 @@ Alpha ignored for performance unless UIView Var opaque set to true. Entire view 
 Can create from RGB, HSB, or even pattern contained in UIImage.   
 UIColour.green.withAlphaComponent(0.5)   
 
+### UILabel
+
+```swift
+let label = UILabel()
+label.numberOfLines = 0 // use as many lines as you need
+label.attributedText = someAttributedText
+label.frame.size = CGSize.zero // if not next line will keep any extra width or height
+label.sizeToFit() // size fits over space it takes up
+```
 
 ### Auto Layout and StackViews
 
