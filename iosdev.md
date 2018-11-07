@@ -822,6 +822,8 @@ override func draw(_ rect:CGRect)
 
 You can draw via a drawing context or you can use UIBezierPath and do it in a OO way. I've used both, usually UIBezierPath. Get context using UIGraphicsGetCurrentContext() for live drawing although you can get context to offscreen buffers and the like.
 
+If you use context instead of UIBezierPath remember it consumes the path when you stroke or fill so you have to build it again.
+
 Create paths from lines, moveTo, arcs using context. Set attributes like colour, linewidths, etc. then stroke it or fill it.
 
 ```swift
