@@ -838,6 +838,21 @@ override func traitCollectionDidChange(_ previousTraitColection: UITraitCollecti
 }
 ```
 
+**See it in storyboard** use @IBDesignable on class and @IBInspectable on any variable that changes view
+
+```swift
+@IBDesignable
+class MyView: UIView {
+  let enemy = UIImage(named: "alien") // doesn't work in storyboard so use below
+  let enemy = UIImage(named: "alien", in: Bundle(for: self.classForCoder), compatibleWith: traitCollection) // works in storyboard
+  @IBInspectable
+  var varWhichNeedsLayoutAndRedraw: Int = 23 { didSet { setNeedsDisplay(); setNeedsLayout() }}
+  
+}
+```
+
+This will compile the view and show it live in storyboard.
+
 ### Drawing
 
 CGFloat not floats and doubles for coords. CGPoint x & y, CGSize width & height, CGRect origin & size
