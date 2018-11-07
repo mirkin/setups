@@ -856,6 +856,18 @@ text.draw(at: myCGPoint) // or draw(in: CGRect)
 let textSize: CGSize = text.size // space it takes up
 ```
 
+Example building centered attributed string with the prefered font and size scaled for users settings. So visually impared may have bigger fonts setup in their settings.
+
+```swift
+private func centeredAttributedString(_ String, fontSize: CGFloat) -> NSAttributedString {
+  var font = UIFont.preferredFont(forTextStyle: .body).withSize(fontSize) // our fixed size
+  font = UIFontMetrics(forTextStyle: .body).scaledFont(for: font) // size from their settings
+  let paragraphStyle = NSMutableParagraphStyle()
+  paragraphStyle.alignment = .center
+  return NSAttributedString(string: string, attributes: [.paragraphStyle:paragraphStyle, .font:font])
+}
+```
+
 ### Colours
 
 Alpha ignored for performance unless UIView Var opaque set to true. Entire view has alpha value also.
