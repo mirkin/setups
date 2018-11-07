@@ -793,6 +793,11 @@ let newView = UIView(frame: myFrame)
 let tinyView = UIView() // frame will be CGRect.zero
 //
 var isHidden: Bool // like visible in flash not seen and gets no events
+//
+//transform var is bitwise affine transform (scale translation and rotation bundled)
+myView.transform = CGAffineTransform.identity
+  .translatedBy(x: myView.frame.size.width, y: myView.frame.size.height)
+  .rotated(by: CGFloat.pi)
 ```
 
 When your **bounds change** like orientation change you are not redrawn by default. Bad Times!! So set
@@ -821,6 +826,15 @@ Handy to do a didSet on any vars that need a redraw or layout subviews.
 ```swift
 class MyUIView: UIView {
   var varWhichNeedsLayoutAndRedraw: Int = 23 { didSet { setNeedsDisplay(); setNeedsLayout() }}
+}
+```
+
+**Detect font change in settings or any other trait changes**
+traits are portrait font sizes etc. so if they change this handy code will do that
+```swift
+override func traitCollectionDidChange(_ previousTraitColection: UITraitCollection?) {
+    setNeedsDisplay()
+    setNeedsLayout()
 }
 ```
 
