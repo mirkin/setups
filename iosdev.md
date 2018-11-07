@@ -11,6 +11,7 @@ Notes on iOS dev. S4 means swift 4
   - [Pods](#pods)
 - [Swift Language](#swift-language)
   - [Struct vs Class](#struct-vs-class)
+  - [Enum](#enum)
   - [Casting](#casting)
   - [Access Levels](#access-levels)
   - [Extensions](#extensions)
@@ -219,6 +220,59 @@ You can pass and share between views using prepare(for seque:) in your view cont
 ### Struct vs Class
 
 **Structures** are value types, properties are copied when passed around. **Classes** are reference types.
+
+### Enum
+
+Simple Case, but you can go crazy with them, raw value, associated data, vars and funcs.
+
+```swift
+enum Suit {
+  case clubs
+  case hearts
+  case spades
+  case diamonds
+}
+```
+
+Can use just like this, or give a type then it will have a raw value. Int will automatically give 0,1,2,3 String will use "clubs", "hearts" etc. Or you can set them.
+
+```swift
+enum Suit: String {
+  case clubs = "CLB"
+  case hearts = "HRTS"
+}
+```
+
+Associated Data
+
+```swift
+enum Rank {
+  case ace
+  case face(String)
+  case numeric(Int)
+  
+  var order: Int {
+      switch self {
+        case .ace: return 1
+        case .numeric(let pips): return pips
+        case .face(let kind) where kind == "J": return 11 // using pattern matching language with switch
+        case .face(let kind) where kind == "Q": return 12
+        case .face(let kind) where kind == "K": return 13
+        default: return 0
+      }
+  }
+  
+  static var all: [Rank] {
+      var allRanks = [Rank.ace] // or allRanks: [Rank] = [.ace] and it will infer type
+      for pips in 2..10 {
+          allRanks.append(Rank.numeric(pips))
+      }
+      allRanks += [Rank.face("J"), .face("Q", .face("K"))] // after Rank.face("J") it can infer type
+      return allRanks
+  }
+  
+}
+```
 
 ### NSObject
 
