@@ -225,6 +225,8 @@ You can pass and share between views using prepare(for seque:) in your view cont
 
 Simple Case, but you can go crazy with them, raw value, associated data, vars and funcs.
 
+**Nesting**, if your enum were nested in a struct or class then it would be MyClassOrStruct.Suit not Suit.
+
 ```swift
 enum Suit {
   case clubs
@@ -323,6 +325,19 @@ S4
 * fileprivate Like private, defines an entity (class, extension, property, ...) as private to everybody outside the source file it is declared in, but accessible to all entities in that source file.
 
 * private more restrictive than fileprivate allows use to any extensions in same source file though as of S4
+
+```swift
+struct TrackedString {
+    private(set) var numberOfEdits = 0
+    var value: String = "" {
+        didSet {
+            numberOfEdits += 1
+        }
+    }
+}
+```
+
+private(set) makes numberOfEdits read only to code outside of struct TrackedString. Not provided an explicit access-level modifier, so receive the default access level of internal for everything but the setter of numberOfEdits.
 
 ### Extensions
 S4
