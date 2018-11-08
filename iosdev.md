@@ -981,7 +981,7 @@ var velocity: CGFloat {get} // radians per second
 UISwipeRecognizer - you configure this swipe based on what you want to recognise
 
 ```swift
-var direction: UISwipeRecognizerDirection  // 
+var direction: UISwipeRecognizerDirection  // .left or [.left,.right] etc.
 var numberOfTouchesRequired: Int // finger count
 ```
 
