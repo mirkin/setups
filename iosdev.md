@@ -37,6 +37,7 @@ Notes on iOS dev. S4 means swift 4
       - [Drawing](#drawing)
         - [Draw Text](#draw-text)
       - [Colours](#colours)
+      - [Gestures](#gestures)
   - [UILabel](#uilabel)
   - [Auto Layout and StackViews](#auto-layout-and-stackViews)
   - [Saving Data](#saving-data)
@@ -923,7 +924,79 @@ private func centeredAttributedString(_ String, fontSize: CGFloat) -> NSAttribut
 
 Alpha ignored for performance unless UIView Var opaque set to true. Entire view has alpha value also.
 Can create from RGB, HSB, or even pattern contained in UIImage.   
-UIColour.green.withAlphaComponent(0.5)   
+UIColour.green.withAlphaComponent(0.5)  
+
+### Gestures
+
+You can get notified of raw touch events touch down, moved, etc. or lean on power of gestures.
+
+Add a UIGestureRecognizer subclass to a UIView and provide a method to handle that gesture. Often added to UIView by a controller or storyboard, less often by the UIView itself. Handler is provided by UIView (if it only effects the view) or Controller (if it effects the model).
+```swift
+@IBOutlet weak var pannableView: UIView {
+    didSet {
+        let panGestureRecognizer = UIPanGestureRecognizer (
+          target: self, action: #selector(ViewController.pan(recognizer:))
+        )
+        pannableView.addGestureRecognizer(panGestureRecognizer)
+    }
+}
+
+func pan(recognizer: UIPanGestureRecognizer) {
+  switch recognizer.state {
+      case .changed: fallthrough // fallthrough on switch does this case and the next
+      case .ended:
+          let translation = recognizer.translation(in: pannableView)
+          // do stuff
+      default: break
+  }
+}
+```
+target (example above it's the controller itself) gets notified of gesture. 
+
+Each UIGestureRecognizer has it's own methods for example UIPanGestureRecognizer
+```swift
+func translation(in: UIView?) -> CGPoint // cumulative since start of recognition
+func velocity(in: UIView?) -> CGPoint // finger speed in points/sec
+func translation(in: UIView?) -> CGPoint // reset translation, reset to zero to get incremental translation
+```
+
+Also var state: UIGestureRecognizerState .possible, .began, .changed, .ended handler called each time stage changes probably .changed will repeatedly happen.
+
+Swipe states are .ended, .recognized you don't get anything during swipe
+
+Check for .failed, .cancelled can fail if you have multiple possible gestures and on wins the other(s) ruled out. A tap starts out like a pan but will .failed if tap doesn't come up quick. 
+
+UIPinchGestureRecognizer
+```swift
+var scale: CGFloat // not read only you can reset it
+var velocity: CGFloat {get} // scale factor per second
+```
+
+UIRotationRecognizer
+```swift
+var roatation: CGFloat // not read only you can reset it (radians)
+var velocity: CGFloat {get} // radians per second
+```
+
+UISwipeRecognizer - you configure this swipe based on what you want to recognise
+
+```swift
+var direction: UISwipeRecognizerDirection  // 
+var numberOfTouchesRequired: Int // finger count
+```
+
+UITapGestureRecognizer
+```swift
+var numberOfTapsRequired: Int // single tap, double etc.
+var numberOfTouchesRequired: Int // finger count
+```
+
+UILongPressRecognizer - interrupted by drag and drop often as it starts with long press too so check for .cancelled
+```swift
+var minimumPressDuration: TimeInterval // how long to hold before recognition
+var numberOfTouchesRequired: Int // finger count
+var allowableMovement: CGFloat // how far can finger move and still recognise
+```
 
 ### UILabel
 
