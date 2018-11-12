@@ -36,6 +36,7 @@ Notes on iOS dev. S4 means swift 4
   - [Views](#uiview)
       - [Drawing](#drawing)
         - [Draw Text](#draw-text)
+      - [Animation](#animation)
       - [Colours](#colours)
       - [Gestures](#gestures)
   - [UILabel](#uilabel)
@@ -773,6 +774,8 @@ Convention to use single letter T instead of a type, if more use U, V or an uppe
 
 Hierarchical rectangular area with coords for drawing and touch events. Root of all is your UIViewController's var view: UIView. Origin upper left.
 
+**Bounds** are your local space, **Frame/Center** is your frame and center in parent.
+
 var superview: UIView?  
 var subviews: [UIView]  
 Order matters subview later in array on top of earlier. View can clip subviews to it'a bounds (default is not)
@@ -918,6 +921,86 @@ private func centeredAttributedString(_ String, fontSize: CGFloat) -> NSAttribut
   paragraphStyle.alignment = .center
   return NSAttributedString(string: string, attributes: [.paragraphStyle:paragraphStyle, .font:font])
 }
+```
+
+### Animation
+
+UIView can animate frame/center, bounds, transform, alpha, backgroundColor over time using UIViewPropertyAnimator.
+
+Define amination params and pass animation block (closure). This block changes the properties (frame/center, bounds, transform,alpha, backgroundColor) changes in the block are made immediately though they **appear** over time. Optional completetion block.
+
+One method in UIViewPropertyAnimator but it has **loads**
+
+```swift
+if myView.alpha == 1.0 {
+    UIViewPropertyAnimator.runningPropertyAnimator(
+        withDuration: 3.0,
+        delay: 2.0,
+        options:: [.allowUserInteraction],
+        animations: { myView.alpha = 0.0 },
+        completion: { if $0 == .end { myView.removeFromSuperview() } }
+    )
+    print("alpha = \(myView.alpha)")
+}
+```
+
+Even though user would see alpha get to 0.0 in 5 seconds time, the property is 0.0 immediately as animation block is executed immediately. Animation will be interrupted if a later animation changes the same property, in this case completion is called early. Here we check it hasn't been completed early and if it hasn't we remove it from the superview.
+
+UIViewAnimationOptions
+```swift
+beginFromCurrentState // say we interrupt another animation on this property do we start from where the animation got to or the value in the animation block, the final value.
+allowUserInteraction // gestures enabled during animation
+layoutSubviews // 
+repeat // indefinate repeat
+autoReverse // play forwards then backwards
+overrideInheritedDuration // if not set udse duration of any in progress anim
+overrideInheritedCurve // if not set use curve of in progress anim
+allowAnimatedContent // if not set interpolate between current and end 'bits'
+curveEaseInEaseOut // slower at start and end
+curveEaseIn // slow start
+curveLinear // same speed throughout
+```
+
+Other selected UIViewAnimationOptions
+```swift
+UIViewPropertyAnimator.transitionFlipFrom{Left,Right,Top,Bottom} // flip view over
+.transitionCrossDissolve // dissolve from old to new
+.transitionCurl{Up,Down} // curling up or down only good for full screen views
+```
+
+```swift
+UIView.transition(with: myPLayingCardView,
+              duration: 0.75,
+              options: [.transitionFlipFromLeft],
+              animations: { cardIsFaceUp = !cardIsFaceUp }
+              completion: nil)
+```
+
+#### Dynamic Animation
+
+Friction, Gravity physics based animations that run until they resolve to stasis. Create UIDynamicAnimator add UIDynamicBehaviors, then add UIDynamicItems
+```swift
+var animatior = UIDynamicAnimator(referenceView: UIView) // pass superview of all view to be animated
+let gravity = UIGravityBehavior() // angle in radians, magnitude 1.0 is 1000 points/s/s (feel a lot like 9.8 or g)
+animator.addBehavior(gravity)
+collider = UICollisionBehavior()
+animator.addBehavior(collider)
+let item1: UIDynamicItem = // usually a UIView but any UIDynamicItem protocol type
+let item2: UIDynamicItem = // usually a UIView
+gravity.addItem(item1)
+collider.addItem(item2)
+```
+
+```swift
+protocol UIDynamicItem : NSObjectProtocol {
+  var center: CGPoint { get set }
+  var bounds: CGRect { get }
+  var transform: CGAffineTransform { get set }
+  var collisionBoundsType: UIDynamicItemCollisionBoundsType { get set }
+  var collisionBoundingPath: UIBezierPath { get set }
+}
+// if you change center or transform while animator is running you must call
+func updateItemUsingCurrentState(item: UIDynamicItem)
 ```
 
 ### Colours
