@@ -28,6 +28,7 @@ Notes on iOS dev. S4 means swift 4
       - [](#)
       - [](#)
   - [Closures](#closures)
+    - [Closure Capturing and Reference Cycles](#closure-capturing-and-reference-cycles)
   - [Errors throw catch](#errors)
   - [Collections](#collections)
     - [Array](#array)
@@ -681,6 +682,49 @@ var myVar: Type = {
   // do stuff
   return <the value>
 }()
+```
+
+##### Closure Capturing and Reference Cycles
+
+```swift
+var foo = { [x = someInstanceOfAClass, y = "Howdy"] in
+  // use local variables x and y in body
+}
+//
+var foo = { [weak x = someInstanceOfAClass, y = "Howdy"] in
+  // use local variables x and y in body
+  // x is optional because it's weak
+}
+//
+var foo = { [unowned x = someInstanceOfAClass, y = "Howdy"] in
+  // use local variables x and y in body
+  // x is not optional but if you use it and it's not in the heap you will crash
+  // unowned means reference counting is not used on them
+}
+```
+
+Memory cycle - foo is a closure which keeps self on the heap. Closures are reference types and live in the heap capturing variables surrounding them and thus keeping them in the heap too. Self has a var foo which keeps that closure foo on the heap completing this reference cycle. Neither can leave.
+
+```swift
+class Elvis {
+  private var foo = {
+      self.bar()
+  }
+  
+  private func bar { ... }
+}
+```
+
+Belows we fix this
+
+```swift
+class Elvis {
+  private var foo = { [weak weakSelf = self] in
+      weakSelf?.bar() // needs optional chaining now
+  }
+  
+  private func bar { ... }
+}
 ```
 
 #### Errors
