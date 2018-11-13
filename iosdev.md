@@ -34,6 +34,7 @@ Notes on iOS dev. S4 means swift 4
     - [Array](#array)
     - [Dictionary](#dictionary)
   - [Generics](#generics)
+  - [UIViewController](#uiviewcontroller)
   - [Views](#uiview)
       - [Drawing](#drawing)
         - [Draw Text](#draw-text)
@@ -837,6 +838,20 @@ Also **Generic Types** classes, structures, enums that can work with any type.
 Array , Optionals, and Dictonary are generic types.
 
 Convention to use single letter T instead of a type, if more use U, V or an upper camel case meaningful word.
+
+### UIViewController
+
+Subclass, set class to your class in storyboard, hook up outlets with ctrl drag into code.
+
+**Lifecycle**
+
+Created from storyboard or in code. 
+
+* Prepared to be segued to
+* Outlet Setting
+* Appear dissapear geometry change
+* ViewDidLoad - call super, do primary setup here, outlets are already set, bounds not set do no geometry-related setup.
+
 
 ### UIView
 
