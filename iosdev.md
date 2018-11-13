@@ -715,12 +715,36 @@ class Elvis {
 }
 ```
 
-Belows we fix this
+Below we fix this
 
 ```swift
 class Elvis {
   private var foo = { [weak weakSelf = self] in
       weakSelf?.bar() // needs optional chaining now
+  }
+  
+  private func bar { ... }
+}
+```
+
+Oten name the local weak variable the same name which is allowed. There are 2 self variables here now.
+
+```swift
+class Elvis {
+  private var foo = { [weak self = self] in
+      self?.bar() // needs optional chaining now
+  }
+  
+  private func bar { ... }
+}
+```
+
+So common you don't need self = self
+
+```swift
+class Elvis {
+  private var foo = { [weak self] in
+      self?.bar() // needs optional chaining now
   }
   
   private func bar { ... }
@@ -1131,13 +1155,26 @@ Uses for the action closure, remove instantanious push, check items are in bound
 var action: (() -> Void)? // closure executed every time it acts on items, called a lot careful of memory cycles
 ```
 
-Memory Cycle - action closure and pushBehavior stuck on heap. pushBehavior points to action closure and action closure points to pushBehavior. I think the pushBehavior gets removed from the animator but it's still pointed to by the closure and the closure still pointed to by the pushBehavior.
+Memory Cycle - action closure and pushBehavior stuck on heap. pushBehavior points to action closure and action closure points to pushBehavior. I think the pushBehavior gets removed from the animator but it's still pointed to by the closure and the closure still pointed to by the pushBehavior. [Closure Capturing and Reference Cycles](#closure-capturing-and-reference-cycles)
 
 ```swift
 if let pushBehavior = UIPushBehavior(items: [...], mode: .instantaneous) {
     pushBehavior.magnitude = ...
     pushBehavior.angle = ...
     pushBehavior.action = {
+        pushBehavior.dynamicAnimator!.removeBehavior(pushBehavior)
+    }
+    animator.addBehavior(pushBehavior) // push now
+}
+```
+
+Fix this, OK if pushBehaviour isn't in the heap we crash but it has to be in the heap or it wouldn't have the action property which is where we are calling it from so it's safe. We could use weak here in that case it would be an optional so you'd need to check for nil etc.
+
+```swift
+if let pushBehavior = UIPushBehavior(items: [...], mode: .instantaneous) {
+    pushBehavior.magnitude = ...
+    pushBehavior.angle = ...
+    pushBehavior.action = { [unowned pushBehaviour] in
         pushBehavior.dynamicAnimator!.removeBehavior(pushBehavior)
     }
     animator.addBehavior(pushBehavior) // push now
