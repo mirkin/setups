@@ -1003,6 +1003,120 @@ protocol UIDynamicItem : NSObjectProtocol {
 func updateItemUsingCurrentState(item: UIDynamicItem)
 ```
 
+Armature/Skeletal Animation **UIAttachmentBehavior**
+
+```swift
+init(item: UIDynamicItem, attachedToAnchor: CGPoint)
+init(item: UIDynamicItem, attachedTo: UIDynamicItem)
+init(item: UIDynamicItem, offsetFromCenter: CGPoint, attachedToAnchor: CGPoint)
+//
+init(item item1: UIDynamicItem, 
+    offsetFromCenter offset1: UIOffset, 
+    attachedTo item2: UIDynamicItem, 
+    offsetFromCenter offset2: UIOffset)
+//
+var length: CGFloat // distance between attached things can be changed during animation
+var anchorPoint: CGPoint // can be set during animation
+// check documentation can be springy, frequency, damping etc.
+```
+
+More on **UICollisionBehavior**
+
+Collision boundary could be ignored if something moves fast enough the granularity isn't large enough to detect the collision. It aslo has a delegate to monitor collisions.
+
+```swift
+var collisionMode: UICollisionBehavior.Mode { get set } // .items, .boundaries, .everything
+//
+func addBoundary(withIdentifier identifier: NSCopying, 
+             for bezierPath: UIBezierPath)
+             
+func addBoundary(withIdentifier identifier: NSCopying, 
+            from p1: CGPoint, 
+              to p2: CGPoint)
+              
+func removeBoundary(withIdentifier identifier: NSCopying)
+var translatesReferenceBoundsIntoBoundary: Bool { get set }
+//
+weak var collisionDelegate: UICollisionBehaviorDelegate? { get set }
+optional func collisionBehavior(_ behavior: UICollisionBehavior, 
+                beganContactFor item: UIDynamicItem, 
+         withBoundaryIdentifier identifier: NSCopying?, 
+                             at p: CGPoint)
+// more delegate methods, look em up
+```
+
+**UISnapBehavior** move to new place and kind of doing snap in a springy way.
+
+```swift
+init(item: UIDynamicItem, 
+snapTo point: CGPoint)
+var damping: CGFloat { get set }
+```
+
+**UIPushBehavior** Push once or push constantly, if instantaneous you'll want to clean that up or it will sit there wasting memory. Remove it with the action closure block explained a little later.
+
+```swift
+init(items: [UIDynamicItem], 
+mode: UIPushBehavior.Mode) // .continuous, . instantaneous
+var pushDirection: CGVector { get set }
+// or
+var angle: CGFloat
+var magnitude: CGFloat // 1.0 moves 100x100 point view at 100 pts/s/s
+```
+
+**UIDynamicItemBehavior** meta behavior, controls behavior of items as they are affected by other behaviors any item added to this with addItem will be affected by 
+```swift
+var allowsRotation: Bool
+var friction: CGFloat
+var elasticity: CGFloat
+// and more check documentation https://developer.apple.com/documentation/uikit/uidynamicitembehavior
+```
+
+Get information about items with UIDynamicItemBehavior
+```swift
+func linearVelocity(for item: UIDynamicItem) -> CGPoint
+func angularVelocity(for item: UIDynamicItem) -> CGFloat
+```
+
+Superclass of all these behaviors is **UIDynamicBehavior** you can subclass and do your own behavior but more often you subclass and combine other existing behaviors to make your new one. You use addChildBehavior(UIDynamicBehavior) to add these existing behaviors.
+
+
+Uses for the action closure, remove instantanious push, check items are in bounds and if not remove them. This could be called a lot so don't put loads of slow code in here for something like gravity which is called loads.
+
+```swift
+var action: (() -> Void)? // closure executed every time it acts on items, called a lot careful of memory cycles
+```
+
+Memory Cycle - action closure and pushBehavior stuck on heap. pushBehavior points to action closure and action closure points to pushBehavior. I think the pushBehavior gets removed from the animator but it's still pointed to by the closure and the closure still pointed to by the pushBehavior.
+
+```swift
+if let pushBehavior = UIPushBehavior(items: [...], mode: .instantaneous) {
+    pushBehavior.magnitude = ...
+    pushBehavior.angle = ...
+    pushBehavior.action = {
+        pushBehavior.dynamicAnimator!.removeBehavior(pushBehavior)
+    }
+    animator.addBehavior(pushBehavior) // push now
+}
+```
+
+All behaviors know UIDynamicAnimator they are part of 
+```swift
+// can only be part of one at a time
+var dynamicAnimator: UIDynamicAnimator? { get }
+// behavior sent this message when it's animator changes
+func willMove(to: UIDynamicAnimator?)
+```
+
+**UIDynamicAnimatorDelegate** will inform you of stasis and leaving stasis.
+
+```swift
+weak var delegate: UIDynamicAnimatorDelegate? { get set }
+//
+optional func dynamicAnimatorDidPause(_ animator: UIDynamicAnimator)
+optional func dynamicAnimatorWillResume(_ animator: UIDynamicAnimator)
+```
+
 ### Colours
 
 Alpha ignored for performance unless UIView Var opaque set to true. Entire view has alpha value also.
