@@ -850,7 +850,35 @@ Created from storyboard or in code.
 * Prepared to be segued to
 * Outlet Setting
 * Appear dissapear geometry change
-* ViewDidLoad - call super, do primary setup here, outlets are already set, bounds not set do no geometry-related setup.
+* ViewDidLoad - call super, do primary setup here, outlets are already set, bounds not set do no geometry-related setup. Called once.
+* ViewWillAppear - call super, may be called more than once
+* ViewDidAppear - call super, start timers, animation
+* ViewWillDisappear - call super on all these ViewWillViewDid stuff, undo ViewDidAppear/ cleanup stuff.
+* ViewDidDisappear - rarely used
+* didRecieveMemoryWarning - probably use and report on logging hopefully not an issue but here release stuff you can get killed by iOS could happen with bad memory leak.
+* override func awakeFromNib() - sent to all objects born from storyboard early before outlets, before prepared for segue
+
+Geometry - UIViewController has var view, UIViewController gets these methods just before it's view gets layoutSubviews etc. Autolayout you don't need to mess with this, but if you do your own stuff then this is where we do it when bounds change etc.
+
+These may be called even if bounds don't change possibly twice in a row with the same bounds so you need efficient code. You never know when the system may call them or how often.
+
+* override func viewWillLayoutSubviews()
+* override func viewDidLayoutSubviews()
+
+**Autorotation** you get the above because bounds change obviously. It will animate the roatation for you but if you want to get involved (think simple calc to scientific calc more buttons on rotation would look odd with default automatic rotation animation or you are animating something like gurgle numbers and the user rotates and adds it's own animation to yours)
+
+If you want to be notified about this and get involved in the default animation
+
+https://developer.apple.com/documentation/uikit/uicontentcontainer/1621466-viewwilltransition
+
+```swift
+func viewWillTransition(to size: CGSize, 
+                   with coordinator: UIViewControllerTransitionCoordinator)
+```
+
+You join using coordinator which has method animate(alongsideTransition:) methods.
+
+
 
 
 ### UIView
