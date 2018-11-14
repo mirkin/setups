@@ -879,7 +879,19 @@ func viewWillTransition(to size: CGSize,
 
 You join using coordinator which has method animate(alongsideTransition:) methods.
 
+**Tip are you on screen**
 
+You may set a variable using a didSet you can check if view.window == nil to check if you are onscreen. If not then do it on viewDidAppear instead.
+
+```swift
+var myThing: Thing {
+    didSet {
+        if view.window != nill {
+            // do something time consuming you only want to do if you are on screen
+        }
+    }
+}
+```
 
 
 ### UIView
