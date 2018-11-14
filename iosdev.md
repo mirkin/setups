@@ -42,6 +42,7 @@ Notes on iOS dev. S4 means swift 4
       - [Colours](#colours)
       - [Gestures](#gestures)
   - [UILabel](#uilabel)
+  - [UIScrollView](#uiscrollview)
   - [Auto Layout and StackViews](#auto-layout-and-stackViews)
   - [Saving Data](#saving-data)
     - [File Structure](#file-structure)
@@ -1327,6 +1328,51 @@ label.numberOfLines = 0 // use as many lines as you need
 label.attributedText = someAttributedText
 label.frame.size = CGSize.zero // if not next line will keep any extra width or height
 label.sizeToFit() // size fits over space it takes up
+```
+
+### UIScrollView
+
+Kind of like UIView when adding UIViews to it but you have contentSize. Common bug is not to set contentSize and wonder what's going on even though you added your subviews and did everything else.
+
+```swift
+scrollView.contentSize = CGSize(width: 3000, height:2000)
+logo.frame = CGRect(x: 100, y:50, width: 100, height: 80)
+scrollView.addSubview(logo)
+```
+
+Reposition subviews by setting their frame, you can change contentSize of scrollView also at any time. Where is your scrollview positioned? scrollView.contentOffset: CGPoint gives upper left. 
+
+Or
+
+```swift
+let visibleRect: CGRect = mySubview.convert(scrollView.bounds, from: scrollView)
+// scrollView.bounds is scrollView coord system hence mySubview.convert
+```
+
+You may be zoomed, system modifies transform property which all UIViews have. Zooming will change contentSize and contentOffset. Zoom will not work without minimumZoomScale and maximumZoomScale set. Will not work without delegate method to specify view to zoom. 
+
+```swift
+// delegate method for zooming ususally you will return a view and subviews will be in that view
+// rather than having multiple views in uiscrollview and returning one to zoom
+func viewForZooming(in scrollView: UIScrollview) -> UIView
+```
+**Zoom Using Code**
+```swift
+var zoomScale: CGFloat
+func setZoomScale(CGFloat, animated: Bool)
+func zoom(to rect: CGRect, animated: Bool)
+```
+
+**Scroll Using Code**
+```swift
+func scrollRectToVisible(CGRect, animated: Bool)
+```
+
+You can do more, locking scroll direction, contentInset, flashScrollIndicators, lots more delegate methods too
+
+```swift
+// if redraw view at new scale reset transform back to identity
+func scrollViewDidEndZooming(UIScrollView, with view: UIView, atScale: CGFloat)
 ```
 
 ### Auto Layout and StackViews
