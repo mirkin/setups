@@ -27,3 +27,10 @@ brew cask install iterm2
 brew install youtube-dl
 ```
 
+Itunes Backup to external drive
+
+System Prefs/Security & Privacy/ Full Disk Access add iterm so we can access the directory
+
+```
+ln -s /Volumes/T5/backup/itunes/Backup ~/Library/Application\ Support/MobileSync/Backup/
+```
