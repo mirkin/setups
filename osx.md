@@ -30,6 +30,8 @@ brew install youtube-dl
 Itunes Backup to external drive
 
 System Prefs/Security & Privacy/ Full Disk Access add iterm so we can access the directory
+Move Backup folder from ~/Library/Application\ Support/MobileSync/Backup to /Volumes/T5/backup/itunes/Backup
+or wherever you want it.
 
 ```
 ln -s /Volumes/T5/backup/itunes/Backup ~/Library/Application\ Support/MobileSync/Backup/
