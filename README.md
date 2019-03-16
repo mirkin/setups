@@ -46,3 +46,17 @@ Press cmd-J to jump to the end of your loop, then cmd-shift-L to mark it.
 You can then watch your loop.
 
 Press cmd-shift-L a third time to cancel the loop.
+
+## Youtube-dl
+
+Download audio
+
+```bash
+youtube-dl -x --audio-format mp3 https://www.youtube.com/watch?v=hc0eNdAAmqY
+```
+
+Snip just a part, first get the url eith -g then use ffmpeg
+
+```bash
+ffmpeg -ss 00:02:46.00 -i $(youtube-dl -g -x --audio-format mp3 https://www.youtube.com/watch?v=hc0eNdAAmqY) -t 00:00:42.00 mySong.mp3
+```
