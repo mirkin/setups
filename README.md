@@ -60,3 +60,15 @@ Snip just a part, first get the url eith -g then use ffmpeg
 ```bash
 ffmpeg -ss 00:02:46.00 -i $(youtube-dl -g -x --audio-format mp3 https://www.youtube.com/watch?v=hc0eNdAAmqY) -t 00:00:42.00 mySong.mp3
 ```
+
+## rsync
+
+Copy and sync files, often use this to keep projects on NAS but work on fast local drive and push back changes.
+
+-a is like -r recursive but keeps symbolic links, dates, owners, etc. P to show progress and resume. 
+-E preserve executability
+--delete is dangerous but we want to remove files in the destination that no longer exist in the source folder.
+
+```bash
+rsync -aPE --delete /Volumes/H/projects/2019/ /Volumes/T5/dev/projects/2019
+```
