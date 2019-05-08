@@ -72,3 +72,8 @@ Copy and sync files, often use this to keep projects on NAS but work on fast loc
 ```bash
 rsync -aPE --delete /Volumes/H/projects/2019/ /Volumes/T5/dev/projects/2019
 ```
+b and --backup-dir will backup the deleted files which could be safer.
+
+```bash
+rsync -abPE --delete --backup-dir="backup $(date +\%y-\%m-\%d)" /Volumes/H/projects/2019/ /Volumes/T5/dev/projects/2019
+```
