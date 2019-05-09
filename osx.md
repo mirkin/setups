@@ -45,6 +45,8 @@ ln -s /Volumes/T5/backup/itunes/Backup ~/Library/Application\ Support/MobileSync
 ```bash
 env EDITOR=vim crontab -e
 
+crontab -l
+
 * * * * *  command to execute
 │ │ │ │ │
 │ │ │ │ └─── day of week (0 - 6) (0 to 6 are Sunday to Saturday, or use names; 7 is Sunday, the same as 0)
