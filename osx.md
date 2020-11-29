@@ -7,7 +7,7 @@
 ## About
 Set up new Mac system.
 
-# Apple Mail 
+## Apple Mail 
 
 Security & Privacy give Full Disk Access to iTerm and Mail
 delete ~/Library/Mail and do a ln -s /Volumes/removabledisk/mailstuff ~/Library/Mail
