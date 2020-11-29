@@ -7,6 +7,32 @@
 ## About
 Set up new Mac system.
 
+## SSH Keys
+
+On remote mac enable remote login in system settings sharing.Then
+you can ssh with user@192.168.1.27 but using keys is safer.
+
+On new mac
+
+```
+ssh-keygen -t rsa
+```
+This wil put id_rsa and id_ras.pub in ~/.ssh
+
+Copy your public key on new mac to remote mac
+
+```sh
+cat ~/.ssh/id_rsa.pub | ssh alex@192.168.1.27 'cat>>~/.ssh/authorized_keys'
+```
+
+Now you and ssh using key and not password, if you don't want to keep typing
+password for your key then add it to ssh agent
+
+```sh
+ssh-add .ssh/id_rsa
+```
+
+
 ## Apple Mail 
 
 Security & Privacy give Full Disk Access to iTerm and Mail
