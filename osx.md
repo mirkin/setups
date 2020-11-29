@@ -32,6 +32,10 @@ password for your key then add it to ssh agent
 ssh-add .ssh/id_rsa
 ```
 
+### Github
+
+Just cat and add the ~/.ssh/id_rsa.pub to github account.
+
 
 ## Apple Mail 
 
