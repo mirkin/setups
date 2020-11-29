@@ -7,6 +7,17 @@
 ## About
 Set up new Mac system.
 
+# Apple Mail 
+
+Security & Privacy give Full Disk Access to iTerm and Mail
+delete ~/Library/Mail and do a ln -s /Volumes/removabledisk/mailstuff ~/Library/Mail
+Can't see Junk & Deleted - Small + hover and add favourites
+
+Annoying notifications not timing out
+```sh
+defaults write com.apple.notificationcenterui bannerTime SECONDS
+```
+
 Install Anaconda for python environments
 
 Install the Homebrew package manager
