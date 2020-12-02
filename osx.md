@@ -7,7 +7,12 @@
 ## About
 Set up new Mac system.
 
-## SSH Keys
+### Hostname
+
+For mymac.local mDNS prefs/sharing/computername
+
+
+### SSH Keys
 
 On remote mac enable remote login in system settings sharing.Then
 you can ssh with user@192.168.1.27 but using keys is safer.
@@ -32,12 +37,12 @@ password for your key then add it to ssh agent
 ssh-add .ssh/id_rsa
 ```
 
-### Github
+#### Github
 
 Just cat and add the ~/.ssh/id_rsa.pub to github account.
 
 
-## Apple Mail 
+### Apple Mail 
 
 Security & Privacy give Full Disk Access to iTerm and Mail
 delete ~/Library/Mail and do a ln -s /Volumes/removabledisk/mailstuff ~/Library/Mail
