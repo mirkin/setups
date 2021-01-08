@@ -11,6 +11,34 @@ Set up new Mac system.
 
 For mymac.local mDNS prefs/sharing/computername
 
+### ZSH
+
+```zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+
+```
+ZSH_THEME="powerlevel10k/powerlevel10k" in .zshrc
+
+Some useful setups
+
+```zsh
+ p9k_configure
+```
+
+Configure using ~/.p10k.zsh I like to change 
+```
+typeset -g POWERLEVEL9K_DIR_BACKGROUND=13
+```
+
+### Finder
+
+Show hidden files - also cmd shift .
+
+```zsh
+defaults write com.apple.Finder AppleShowAllFiles true
+```
+
 
 ### SSH Keys
 
