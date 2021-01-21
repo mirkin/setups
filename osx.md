@@ -31,6 +31,20 @@ Configure using ~/.p10k.zsh I like to change
 typeset -g POWERLEVEL9K_DIR_BACKGROUND=13
 ```
 
+Autojump enable as plugin in .zshrc
+```
+plugins=(git ssh-agent autojump)
+```
+
+Install
+```zsh
+git clone git://github.com/wting/autojump.git
+cd autojump
+./install.py
+cd ..
+rm -rf autojump
+```
+
 ### Finder
 
 Show hidden files - also cmd shift .

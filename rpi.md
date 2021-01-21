@@ -1,35 +1,60 @@
 
-## Table of contents
+### Table of contents
 
 - [About](#about)
+- [Docker](#docker)
 - [MAC Put OS onto SD card](#mac-put-os-onto-sd-card)
-- [Use my preconfigured dot files](#dot-files)
+- [Dot Files](#dot-files)
 - [MAC Setup](#mac-setup)
-- [See Pi Files in Mac Finder](#see-pi-files-in-mac-finder)
-- [See Pi Files on PC (Samba)](#see-pi-files-in-windows-explorer)
-- [Static IP Setup](#static-ip-setup)
 - [Git setup](#git-setup)
-- [Wifi Setup ](#wifi-setup )
-- [Remove Wolfram](#remove-wolfram)
-- [I2C Setup](#i2c-setup)
+- [Wifi Setup](#wifi-setup)
 - [User Management](#user-management)
 - [Setup VNC](#setup-vnc)
 - [Setup .local domain](#setup-local-domain)
+- [Sudo Preserve Environment Variables](#sudo-preserve-environment-variables)
 - [Disk Usage](#disk-usage)
+- [GPIO](#gpio)
+- [OpenCV Python](#opencv-python)
+- [X11 Windows on Mac](#x11-windows-on-mac)
 - [Pimoroni Unicorn Hat](#pimoroni-unicorn-hat)
-- [Run at Startup](#run-at-startup)
-- [Create symbolic link](#symbolic-link)
-- [SSH Keys](#ssh-keys)
-   - [SSH Github](#ssh-keys-github)
-- [Make file executable](#make-python-file-executable)
-- [VIM/Vi](vim.md)
+- [Run at startup](#run-at-startup)
+- [Symbolic Link](#symbolic-link)
+- [SSH-Keys](#ssh-keys)
+  - [Overview](#overview)
+  - [Details](#details)
+  - [SSH-Keys-GITHUB](#ssh-keys-github)
+- [Shell](#shell)
+- [Cool Stuff](#cool-stuff)
+- [TMUX](#tmux)
+- [Linux Commands](#linux-commands)
+    - [Basic user and shell info](#basic-user-and-shell-info)
+    - [Finding Searching](#finding-searching)
+    - [Processes](#processes)
+    - [ps](#ps)
+      - [Columns](#columns)
+      - [Top](#top)
+      - [cgroups](#cgroups)
+    - [Scripts](#scripts)
 
 ## About
 We have so many Raspberry Pi computers in our household, so we set up a collection of useful information so we can share our knowledge and quicky set up new systems.
 
-## MAC Put OS onto SD card 
-=======================
+## Docker
+Install from script and add user, will need to logout for permissions to take efect.
 
+```bash
+curl -sSL https://get.docker.com | sh
+sudo usermod -aG docker [user_name]
+docker run hello-world
+```
+
+docker-compose
+
+```bash
+sudo pip3 -v install docker-compose
+```
+
+## MAC Put OS onto SD card 
 Insert SD card  
 
 ```bash
@@ -66,7 +91,6 @@ Then wait for a long time CTRL+t will show progress
 Took about half an hr. Then plug in the Pi and off you go.
 
 ## Dot Files
-===========
 Clone dot files and make symbolic links example for vim so you are up and running
 quickly with your familiar environment
 ```bash
@@ -75,8 +99,6 @@ ln -s dotfiles/.vimrc .vimrc
 ```
 
 ## MAC Setup
-=========
-
 I'm going headless so no monitor, keyboard, or mouse. Plugged into network and checked the
 DHCP client table in my router to find it's IP which was 192.168.1.107 in my case.
 
@@ -163,9 +185,24 @@ Can now ssh to 192.168.1.32
 ##See Pi Files in Mac Finder
 
 I want to be able to browse and edit files on my Mac so
+
 ```bash
 sudo apt-get install netatalk
+sudo vi /etc/netatalk/afp.conf
 ```
+
+; are comments to view home dir for any user
+```
+[Homes]
+basedir regex = /home
+```
+
+For volumes 
+```
+[T5]
+path = /media/T5
+```
+
 Now I can log in at pi and use finder and all my favourite editing tools.
 
 
@@ -209,7 +246,6 @@ git config --global user.name "My name"
 ```
 
 ## Wifi Setup 
-
 Edit /etc/network/interfaces 
 
 ```bash
@@ -362,6 +398,17 @@ Change your password or another person's
 passwd
 sudo passwd alex
 ```
+
+Change autologin from pi to alex
+autologin-user=alex in file
+```
+sudo vi /etc/lightdm/lightdm.conf
+```
+
+```
+sudo mount -t hfsplus -o remount,rw,force /media/alex/T5
+```
+
 ## Setup VNC 
 ```bash
 sudo apt-get install tightvncserver
@@ -598,7 +645,6 @@ WantedBy=multi-user.target
 sudo systemctl enable Spooky_Eyes.service  
 
 ## Symbolic Link
-
 ```bash
 ln -s target source
 ```
