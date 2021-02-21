@@ -6,6 +6,10 @@
 - [MAC Put OS onto SD card](#mac-put-os-onto-sd-card)
 - [Dot Files](#dot-files)
 - [MAC Setup](#mac-setup)
+  - [Share Mac Drive](#share-mac-drive)
+- [Static IP Setup](#static-ip-setup)
+  - [See Pi Files in Mac Finder](#see-pi-files-in-mac-finder)
+- [See Pi files in Windows Explorer](#see-pi-files-in-windows-explorer)
 - [Git setup](#git-setup)
 - [Wifi Setup](#wifi-setup)
 - [User Management](#user-management)
@@ -138,7 +142,21 @@ sudo raspi-config
 Expand file system to use the full SD
 Under advanced set hostname and enable I2C finish and reboot.
 
-##Static IP Setup
+### Share Mac Drive
+
+```bash
+sudo apt install  samba-common smbclient samba-common-bin smbclient  cifs-utils
+mkdir /mnt/abc
+mount -t cifs //server/share /mnt/abc -o user=user,pass=password,workgroup=WORKGROUP,file_mode=0777,dir_mode=0777
+```
+
+Permanent edit /etc/fstab & perhsaps enable wait for network on boot in raspi-config
+```
+//macmini.local/minit7 /mnt/minit7 cifs username=alex,password=password,file_mode=0777,dir_mode=0777 0 0
+```
+
+
+## Static IP Setup
 
 Now I want to set a static IP address so change the /etc/network/interfaces 
 
@@ -182,7 +200,7 @@ sudo reboot
 
 Can now ssh to 192.168.1.32
 
-##See Pi Files in Mac Finder
+### See Pi Files in Mac Finder
 
 I want to be able to browse and edit files on my Mac so
 
@@ -206,7 +224,7 @@ path = /media/T5
 Now I can log in at pi and use finder and all my favourite editing tools.
 
 
-##See Pi files in Windows Explorer
+## See Pi files in Windows Explorer
 
 Browse and edit files on the PC.
 
@@ -356,12 +374,28 @@ Add/Remove a user I'll add and remove alex, the -r is to delete the home folder 
 sudo adduser alex
 sudo userdel -r alex
 ```
+
+If you want this user to be able to do the same as user pi then they need to belong to the same groups. So list groups pi belongs to. An then new user and compare and contrast.
+
+```bash
+groups pi
+groups alex
+```
+
+Add them
+```bash
+sudo adduser alex adm
+sudo adduser alex sudo
+```
+
 The user will not be able to sudo, if you want them to be able to then
 ```bash
 sudo visudo
 ```
+
 and add an entry for them
-```bash
+
+```
 #
 # This file MUST be edited with the 'visudo' command as root.
 #
