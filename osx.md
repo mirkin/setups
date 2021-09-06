@@ -86,9 +86,13 @@ Just cat and add the ~/.ssh/id_rsa.pub to github account.
 
 ### Apple Mail 
 
-Security & Privacy give Full Disk Access to iTerm and Mail
+Security & Privacy give Full Disk Access to iTerm and Mail 
 delete ~/Library/Mail and do a ln -s /Volumes/removabledisk/mailstuff ~/Library/Mail
 Can't see Junk & Deleted - Small + hover and add favourites
+You kind of have to import the old mail boxes you can't just copy over the old folder
+so create a new folder on external drive and delete & symbolic link the one it expected
+then set up your account etc. Finally import the old mail boxes from the old folder you
+had set up on your external drive.
 
 Annoying notifications not timing out
 ```sh
