@@ -19,6 +19,26 @@ This is a repo if set up instructions for new installs along with reminders on h
   - [Figlet](#figlet)
 - Development
   - [iOS/XCode/Swift](iosdev.md)
+
+
+## VSCode
+
+### Remote Development
+
+Make sure ssh keys are on remote ~/.ssh/authorized_keys and download VSCode Remode Development extension pack
+Then in VSCode Remote-SSH:Add New Host and Remote-SS:Connect To Host I selected bottom left green with arrows.
+
+It will ask for a path so be quite specific you don't want to include unecessary folders in this case live watch
+wasn't able to monitor so many folders so I had to do the following.
+
+edit user settings in VSCode then restart VSCode
+```
+"files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true
+  }
+```
   
 ## Figlet
 figlet for ascii art  
