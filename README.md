@@ -97,3 +97,13 @@ b and --backup-dir will backup the deleted files which could be safer.
 ```bash
 rsync -abPE --delete --backup-dir="backup $(date +\%y-\%m-\%d)" /Volumes/H/projects/2019/ /Volumes/T5/dev/projects/2019
 ```
+
+## Common Shell Tips
+
+| Task | Shortcut/Command |
+| --- | --- |
+| Move cursor to beginning of line | `Ctrl + A` (Emacs mode), `0` or `Shift + 6` (vi mode) |
+| Move cursor to end of line | `Ctrl + E` (Emacs mode), `$` or `Shift + 4` (vi mode) |
+| Save a file in vi when you forget to use `sudo` | `Esc`, `:w !sudo tee %`, enter password, `Enter` |
+| Start `ssh-agent` and add your SSH key | `eval "$(ssh-agent -s)"`, `ssh-add /path/to/your/key` |
+
